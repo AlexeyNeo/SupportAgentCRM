@@ -1,20 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
-using GMailAPILibrary;
-
 
 namespace SupportAgentCRM.Controllers
 {
+    public class Messages
+    {
+        public IEnumerable<GMailAPILibrary.Message> gmail { get; set; }
+        public IEnumerable <ChatHelpdescAgent.Client> chat2desk { get; set; }
+    }
     public class messagesController : ApiController
     {
         // GET: api/messages
-        public IEnumerable<Message> Get()
+        public Messages Get()
         {
-            return Message.GetMessages();
+            ChatHelpdescAgent.Clients clients = new ChatHelpdescAgent.Clients();
+            Messages msg = new Messages();
+            msg.gmail = GMailAPILibrary.Message.GetMessages();
+            msg.chat2desk = clients.GetList();
+            return msg;
         }
 
         // GET: api/messages/5
