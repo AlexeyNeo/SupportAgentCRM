@@ -48,12 +48,6 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ChatHelpdescAgent">
-      <HintPath>..\..\..\..\Documents\Visual Studio 2015\Projects\ChatHelpdescAgent\ChatHelpdescAgent\bin\Debug\ChatHelpdescAgent.dll</HintPath>
-    </Reference>
-    <Reference Include="GMailAPILibrary">
-      <HintPath>..\..\..\..\AppData\Roaming\Skype\My Skype Received Files\GMailAPILibrary\GMailAPILibrary\bin\Release\GMailAPILibrary.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -181,6 +175,30 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Libraries\ChatHelpdescAgent.dll" />
+    <Content Include="Libraries\ChatHelpdescAgent.pdb" />
+    <Content Include="Libraries\GMailAPILibrary.dll" />
+    <Content Include="Libraries\GMailAPILibrary.pdb" />
+    <Content Include="Libraries\Google.Apis.Auth.dll" />
+    <Content Include="Libraries\Google.Apis.Auth.PlatformServices.dll" />
+    <Content Include="Libraries\Google.Apis.Auth.xml" />
+    <Content Include="Libraries\Google.Apis.Core.dll" />
+    <Content Include="Libraries\Google.Apis.Core.xml" />
+    <Content Include="Libraries\Google.Apis.dll" />
+    <Content Include="Libraries\Google.Apis.Gmail.v1.dll" />
+    <Content Include="Libraries\Google.Apis.Gmail.v1.xml" />
+    <Content Include="Libraries\Google.Apis.PlatformServices.dll" />
+    <Content Include="Libraries\Google.Apis.xml" />
+    <Content Include="Libraries\MimeKit.dll" />
+    <Content Include="Libraries\MimeKit.xml" />
+    <Content Include="Libraries\Newtonsoft.Json.dll" />
+    <Content Include="Libraries\Newtonsoft.Json.xml" />
+    <Content Include="Libraries\RestSharp.dll" />
+    <Content Include="Libraries\RestSharp.xml" />
+    <Content Include="Libraries\System.Security.Cryptography.Algorithms.dll" />
+    <Content Include="Libraries\System.Security.Cryptography.Encoding.dll" />
+    <Content Include="Libraries\System.Security.Cryptography.Primitives.dll" />
+    <Content Include="Libraries\System.Security.Cryptography.X509Certificates.dll" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -210,6 +228,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Libraries\GMailAPILibrary.dll.config" />
+    <Content Include="Libraries\config.ini" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
