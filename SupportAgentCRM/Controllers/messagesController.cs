@@ -13,8 +13,8 @@ namespace SupportAgentCRM.Controllers
         // GET: api/messages
         public Messages Get()
         {
-            var clients = new ChatHelpdescAgent.Clients();
-            var msg = new Messages();
+            ChatHelpdescAgent.Clients clients = new ChatHelpdescAgent.Clients();
+            Messages msg = new Messages();
             msg.gmail = GMailAPILibrary.Message.GetMessages();
             msg.chat2desk = ChatHelpdescAgent.Messages.GetMessages("From_client", true,10, false).messages;
             return msg;
