@@ -12,7 +12,7 @@ namespace GMailAPILibrary
         public DateTimeOffset ReceivedDate { get; }
         public Dictionary<string, string> From { get; }
         public Dictionary<string, string> To { get; }
-        public List<string> Headers { get; }
+     //   public List<string> Headers { get; }
         public string Snippet { get; }
         public string TextBody { get; }
         public string HtmlBody { get; }
@@ -56,9 +56,10 @@ namespace GMailAPILibrary
             HtmlBody = message.HtmlBody;//тело сообщения в html
 
             //список заголовков
-            this.Headers = new List<string>();
+        /*    this.Headers = new List<string>();
             foreach (var header in message.Headers)
                 this.Headers.Add(header.Value);
+                */
 
             //адрес отправителя (from)
             this.From = new Dictionary<string, string>();

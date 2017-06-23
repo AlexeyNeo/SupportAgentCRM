@@ -162,7 +162,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -210,6 +209,7 @@
     <Compile Include="GMail\APIHelper.cs" />
     <Compile Include="GMail\GmailAPI.cs" />
     <Compile Include="GMail\Message.cs" />
+    <Compile Include="Models\Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

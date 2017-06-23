@@ -1,24 +1,50 @@
-﻿using System.Collections.Generic;
+﻿using ChatHelpdescAgent;
+using SupportAgentCRM.Models;
+using System.Collections.Generic;
 using System.Web.Http;
-
 namespace SupportAgentCRM.Controllers
 {
-    public class Messages
-    {
-        public IEnumerable <GMailAPILibrary.Message> gmail { get; set; }
-        public IEnumerable <ChatHelpdescAgent.Message> chat2desk { get; set; }
-    }
     public class messagesController : ApiController
     {
         // GET: api/messages
-        public Messages Get()
+        public List<Msg> Get()
         {
-            ChatHelpdescAgent.Clients clients = new ChatHelpdescAgent.Clients();
-            Messages msg = new Messages();
-            msg.gmail = GMailAPILibrary.Message.GetMessages();
-            msg.chat2desk = ChatHelpdescAgent.Messages.GetMessages("From_client", true,10, false).messages;
-            return msg;
+            List<GMailAPILibrary.Message> messagesGmail = GMailAPILibrary.Message.GetMessages();
+            MessagesResponse messagesInCh2D = ChatHelpdescAgent.Messages.GetMessages("from_client", false, 100, false);
+
+            List<Msg> messages = new List<Msg>();
+
+            foreach (var msg in messagesGmail)
+            {
+                Msg message = new Msg
+                {
+                    Name = msg.sender.Name,
+                    text = msg.TextBody,
+                    TextHtml = msg.HtmlBody,
+                    Subject = msg.Subject,
+                    date = msg.ReceivedDate,
+                    transport = "gmail"
+                };
+                messages.Add(message);
+            }
+
+            foreach (var msg in messagesInCh2D.messages)
+            {
+                Client client = new Clients().GetClient(System.Int32.Parse(msg.clientID));
+                Msg message = new Msg()
+                {
+                    Name = client.name,
+                    Post = client.extra_comment_2,
+                    Company = client.extra_comment_1,
+                    text = msg.text,
+                    transport = msg.transport
+                };
+                messages.Add(message);
+            }
+
+            return messages;
         }
+    }
 
         // GET: api/messages/5
         public string Get(int id)
