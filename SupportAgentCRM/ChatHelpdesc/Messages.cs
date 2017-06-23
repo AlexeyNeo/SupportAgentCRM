@@ -17,7 +17,7 @@ namespace ChatHelpdescAgent
 
         static string url = "https://api.chat2desk.com/v1/";
 
-
+    
 
         /// <summary>
         /// Возвращает список сообщений
@@ -28,6 +28,7 @@ namespace ChatHelpdescAgent
         /// <returns></returns>
         public static MessagesResponse GetMessages(string type, bool? read, int? limit, bool setRead)
         {
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
             string reqURL = url + "messages";
             
             //формирование URL строки с параметрами
