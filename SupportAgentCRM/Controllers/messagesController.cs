@@ -21,8 +21,8 @@ namespace SupportAgentCRM.Controllers
                     text = msg.TextBody,
                     TextHtml = msg.HtmlBody,
                     Subject = msg.Subject,
-                    date = msg.ReceivedDate,
-                    transport = "gmail"
+                    Date = msg.ReceivedDate,
+                    Transport = "gmail"
                 };
                 messages.Add(message);
             }
@@ -36,7 +36,8 @@ namespace SupportAgentCRM.Controllers
                     Post = client.extra_comment_2,
                     Company = client.extra_comment_1,
                     text = msg.text,
-                    transport = msg.transport
+                    Transport = msg.transport,
+                    Phone = client.phone
                 };
                 messages.Add(message);
             }

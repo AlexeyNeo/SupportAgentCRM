@@ -10,8 +10,9 @@ namespace SupportAgentCRM.Models
         public string text { get; set; }
         public string TextHtml { get; set; }
         public string Subject { get; set; }
-        public DateTimeOffset date { get; set; }
-        public string transport { get; set; }
+        public DateTimeOffset Date { get; set; }
+        public string Transport { get; set; }
+        public string Phone { get; set; }
     }
 
     // GET: api/messages
