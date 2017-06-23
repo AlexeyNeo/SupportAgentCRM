@@ -44,7 +44,7 @@ namespace SupportAgentCRM.Controllers
 
             return messages;
         }
-    }
+    
 
         // GET: api/messages/5
         public string Get(int id)
