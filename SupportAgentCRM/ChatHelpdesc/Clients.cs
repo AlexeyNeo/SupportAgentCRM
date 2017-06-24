@@ -139,6 +139,7 @@ namespace ChatHelpdescAgent
                 return null;
             }       
         }
+
         /// <summary>
         /// Метод SetClient Изменяет данные о клиенте.
         /// </summary>
@@ -167,7 +168,7 @@ namespace ChatHelpdescAgent
                         IRestResponse response = client.Execute(request);
                         if (response.ErrorException != null)//произошла ли ошибка
                         {
-                            Console.WriteLine("Исключение в методе SetClient() {0}", response.ErrorMessage);
+                            //Console.WriteLine("Исключение в методе SetClient() {0}", response.ErrorMessage);
                             return false;
                         }
                     }
@@ -175,6 +176,7 @@ namespace ChatHelpdescAgent
                 }
             return true;
          }
+
         public bool SetClient(int Id, string nickname, string extra_comment_1, string extra_comment_2)
         {
             int flag = 0;
@@ -201,6 +203,7 @@ namespace ChatHelpdescAgent
             }
             return true;
         }
+
         public bool SetClient(int Id, string extra_comment_2)
         {
             int flag = 0;
