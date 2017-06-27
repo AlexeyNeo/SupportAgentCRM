@@ -18,7 +18,7 @@ namespace ChatHelpdescAgent
             System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;// если не сможет подключиться к серверу, то удалить строку.
             Rest = "https://api.chat2desk.com/v1/clients/";
             //token = new IniFileJson().token;
-            token = "d1bdb8e80fc2c4d3050d49a10a433d";
+            token = "c2384aebf898fa471124dc14c73c3b";
 
         }
         /// <summary>
@@ -150,34 +150,7 @@ namespace ChatHelpdescAgent
         /// <param name="extra_comment_2"></param>
         /// <param name="extra_comment_3"></param>
         /// <returns></returns>
-        public bool SetClient(int Id, string nickname, string comment, string extra_comment_1, string extra_comment_2, string extra_comment_3)
-        {
-            int flag=0;
-            flag = GetIdClient(Id);// есть ли такой id 
-                if ( Id >= 0 )
-                {
-                    if (flag == 1)
-                    {
-                        var client = new RestClient(Rest + Id.ToString());
-                        var request = new RestRequest(Method.PUT);
-                        request.AddHeader("cache-control", "no-cache");
-                        request.AddHeader("content-type", "application/json");
-                        request.AddHeader("authorization", token);
-
-                        request.AddParameter("application/json", "{\n\t\"nickname\": \""+nickname+"\",\n \"comment\": \""+comment+"\",\n \"extra_comment_1\": \""+extra_comment_1+"\",\n \"extra_comment_2\": \""+extra_comment_2+"\",\n \"extra_comment_3\": \""+extra_comment_3+"\"\n}", ParameterType.RequestBody); 
-                        IRestResponse response = client.Execute(request);
-                        if (response.ErrorException != null)//произошла ли ошибка
-                        {
-                            //Console.WriteLine("Исключение в методе SetClient() {0}", response.ErrorMessage);
-                            return false;
-                        }
-                    }
-                    else if (flag == -1) return false;//если нет такого id то false 
-                }
-            return true;
-         }
-
-        public bool SetClient(int Id, string nickname, string extra_comment_1, string extra_comment_2)
+        public bool ChangeClient(int Id, string nickname, string extra_comment_1, string extra_comment_2)
         {
             int flag = 0;
             flag = GetIdClient(Id);// есть ли такой id 
@@ -185,14 +158,36 @@ namespace ChatHelpdescAgent
             {
                 if (flag == 1)
                 {
+                    int f = 0;
+                    string query="{";// для тела запроса
                     var client = new RestClient(Rest + Id.ToString());
                     var request = new RestRequest(Method.PUT);
                     request.AddHeader("cache-control", "no-cache");
                     request.AddHeader("content-type", "application/json");
                     request.AddHeader("authorization", token);
-
-                    request.AddParameter("application/json", "{\n\t\"nickname\": \"" + nickname + "\",\n \"extra_comment_1\": \"" + extra_comment_1 + "\",\n \"extra_comment_2\": \"" + extra_comment_2 + "\"\n}", ParameterType.RequestBody);
+                    // формирую строку запроса. если поле имеет пустые кавыки, то параметр игнорируем.
+                    if (nickname != "")
+                    {
+                        query += "\n\n \"nickname\": \"" + nickname + "\"";
+                        f = 1;
+                    }
+                    if (extra_comment_1 != "")
+                    {
+                        if (f != 0)
+                            query += ",";
+                            query += "\n \"extra_comment_1\": \"" + extra_comment_1 + "\"";
+                        f = 1;
+                    }
+                    if (extra_comment_2 != "")
+                    {
+                        if (f !=0)
+                            query += ",";
+                        query += "\n \"extra_comment_2\": \"" + extra_comment_2 + "\"\n";
+                    }
+                    query += "}";// для тела запроса
+                    request.AddParameter("application/json", query, ParameterType.RequestBody);
                     IRestResponse response = client.Execute(request);
+
                     if (response.ErrorException != null)//произошла ли ошибка
                     {
                         Console.WriteLine("Исключение в методе SetClient() {0}", response.ErrorMessage);
@@ -204,7 +199,7 @@ namespace ChatHelpdescAgent
             return true;
         }
 
-        public bool SetClient(int Id, string extra_comment_2)
+        public bool ChangeClient(int Id, string extra_comment_2)
         {
             int flag = 0;
             flag = GetIdClient(Id);// есть ли такой id 
@@ -230,7 +225,6 @@ namespace ChatHelpdescAgent
             }
             return true;
         }
-
         /// <summary>
         /// GetIdClient проверяет на существование  клиента
         /// </summary>

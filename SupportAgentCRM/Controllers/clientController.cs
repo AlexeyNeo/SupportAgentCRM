@@ -19,9 +19,10 @@ namespace SupportAgentCRM.Controllers
         }
 
         // GET: api/client/5
-        public string Get(int id)
+        public Client Get(int id)
         {
-            return "value";
+            Clients clients = new Clients();
+            return clients.GetClient(id);
         }
 
         // POST: api/client
@@ -31,19 +32,19 @@ namespace SupportAgentCRM.Controllers
             
         }
 
-        public class Params
-        {
-            string value { get; set; }
-        }
-
         // PUT: api/client/5
         public void Put(string id, [FromBody]string json)
         {
+            Clients clients = new Clients();
             dynamic p = JsonConvert.DeserializeObject(json);
-            string clientID
-            string post = p.post;
-            string company = p.company;
-            string name = p.name;
+            string clientId = p.id;
+            string post="";
+            string company = "";
+            string name = "";
+            if (p.post != null) post = p.post;
+            if (p.name != null) name = p.name;
+            if (p.company != null) company = p.company;
+            clients.ChangeClient(int.Parse(id), name, company, post);
         }
 
         // DELETE: api/client/5
