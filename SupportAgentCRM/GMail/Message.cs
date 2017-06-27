@@ -12,7 +12,6 @@ namespace GMailAPILibrary
         public DateTimeOffset ReceivedDate { get; }
         public Dictionary<string, string> From { get; }
         public Dictionary<string, string> To { get; }
-     //   public List<string> Headers { get; }
         public string Snippet { get; }
         public string TextBody { get; }
         public string HtmlBody { get; }

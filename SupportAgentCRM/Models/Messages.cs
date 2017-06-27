@@ -4,7 +4,9 @@ namespace SupportAgentCRM.Models
 {
     public class Msg
     {
+        public string ID { get; set; }
         public string Name { get; set; }
+        public string EmailAddress { get; set; }
         public string Post { get; set; }
         public string Company { get; set; }
         public string text { get; set; }
