@@ -37,11 +37,13 @@ namespace SupportAgentCRM.Controllers
         }
 
         // PUT: api/client/5
-        public void Put(int id, [FromBody]string json)
+        public void Put(string id, [FromBody]string json)
         {
             dynamic p = JsonConvert.DeserializeObject(json);
-            string key = p.key;
-            string value = p.value;
+            string clientID
+            string post = p.post;
+            string company = p.company;
+            string name = p.name;
         }
 
         // DELETE: api/client/5
