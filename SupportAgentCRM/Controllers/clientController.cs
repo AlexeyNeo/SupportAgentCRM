@@ -40,7 +40,7 @@ namespace SupportAgentCRM.Controllers
         public void Put(string id, [FromBody]string json)
         {
             dynamic p = JsonConvert.DeserializeObject(json);
-            string clientID
+            string clientID;
             string post = p.post;
             string company = p.company;
             string name = p.name;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using RestSharp;
 using Newtonsoft.Json;
 using System.Web;
+using System.Web.Configuration;
 
 namespace ChatHelpdescAgent
 {
@@ -13,7 +14,7 @@ namespace ChatHelpdescAgent
     {
         //"d1bdb8e80fc2c4d3050d49a10a433d"
         //static IniFile ini = new IniFile(Environment.CurrentDirectory+@"\config.ini");
-        static string token = "d1bdb8e80fc2c4d3050d49a10a433d";
+        static string token = WebConfigurationManager.AppSettings["Chat2DescToken"];
 
         static string url = "https://api.chat2desk.com/v1/";
 

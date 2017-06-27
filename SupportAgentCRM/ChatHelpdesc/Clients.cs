@@ -2,6 +2,7 @@
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Web.Configuration;
 
 namespace ChatHelpdescAgent
 {
@@ -18,7 +19,7 @@ namespace ChatHelpdescAgent
             System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;// если не сможет подключиться к серверу, то удалить строку.
             Rest = "https://api.chat2desk.com/v1/clients/";
             //token = new IniFileJson().token;
-            token = "d1bdb8e80fc2c4d3050d49a10a433d";
+            token = WebConfigurationManager.AppSettings["Chat2DescToken"];
 
         }
         /// <summary>
