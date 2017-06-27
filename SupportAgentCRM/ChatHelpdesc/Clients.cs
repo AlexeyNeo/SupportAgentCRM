@@ -142,7 +142,7 @@ namespace ChatHelpdescAgent
         }
 
         /// <summary>
-        /// Метод SetClient Изменяет данные о клиенте.
+        /// Метод SetClient Изменяет данные о клиенте. если параметр пуст, то нужно отправлять ""
         /// </summary>
         /// <param name="Id"></param>
         /// <param name="nickname"></param>
@@ -200,32 +200,7 @@ namespace ChatHelpdescAgent
             return true;
         }
 
-        public bool ChangeClient(int Id, string extra_comment_2)
-        {
-            int flag = 0;
-            flag = GetIdClient(Id);// есть ли такой id 
-            if (Id >= 0)
-            {
-                if (flag == 1)
-                {
-                    var client = new RestClient(Rest + Id.ToString());
-                    var request = new RestRequest(Method.PUT);
-                    request.AddHeader("cache-control", "no-cache");
-                    request.AddHeader("content-type", "application/json");
-                    request.AddHeader("authorization", token);
 
-                    request.AddParameter("application/json", "{\n \"extra_comment_2\": \"" + extra_comment_2 + "\"\n}", ParameterType.RequestBody);
-                    IRestResponse response = client.Execute(request);
-                    if (response.ErrorException != null)//произошла ли ошибка
-                    {
-                        Console.WriteLine("Исключение в методе SetClient() {0}", response.ErrorMessage);
-                        return false;
-                    }
-                }
-                else if (flag == -1) return false;//если нет такого id то false 
-            }
-            return true;
-        }
         /// <summary>
         /// GetIdClient проверяет на существование  клиента
         /// </summary>
