@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ChatHelpdescAgent;
+using Newtonsoft.Json;
 
 namespace SupportAgentCRM.Controllers
 {
@@ -30,9 +31,17 @@ namespace SupportAgentCRM.Controllers
             
         }
 
-        // PUT: api/client/5
-        public void Put(int id, [FromBody]string value)
+        public class Params
         {
+            string value { get; set; }
+        }
+
+        // PUT: api/client/5
+        public void Put(int id, [FromBody]string json)
+        {
+            dynamic p = JsonConvert.DeserializeObject(json);
+            string key = p.key;
+            string value = p.value;
         }
 
         // DELETE: api/client/5
