@@ -13,7 +13,7 @@ namespace SupportAgentCRM.Controllers
         // GET api/<controller>
         public List<Dialog> Get()
         {
-            
+            return null;
         }
 
         // GET api/<controller>/5

@@ -127,6 +127,7 @@ namespace ChatHelpdescAgent
         /// <returns></returns>
         public static Message GetMessage(string messageId)
         {
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
             //формировании url запроса
             string reqURL = url + "messages/" + messageId;// /v1/messages/<id сообщения>/
 
