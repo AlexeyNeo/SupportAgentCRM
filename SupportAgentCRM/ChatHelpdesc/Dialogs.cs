@@ -17,7 +17,7 @@ namespace ChatHelpdescAgent
         public static List<Dialog> Get()
         {
            // System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;// если не сможет подключиться к серверу, то удалить строку.
-            Dialog dlg = new Dialog();
+            
             List<Dialog> dialogs = new List<Dialog>();
             var client = new RestClient(Rest);
             var request = new RestRequest(Method.GET);
@@ -28,6 +28,7 @@ namespace ChatHelpdescAgent
 
             foreach (dynamic dialog in dynObj.data)
             {
+                Dialog dlg = new Dialog();
                 dlg.ID = dialog.id;
                 dlg.state = dialog.state;
                 dlg.begin = DateTimeOffset.ParseExact(dialog.begin.ToString().Replace("UTC", "GMT"),
