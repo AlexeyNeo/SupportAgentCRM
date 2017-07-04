@@ -228,6 +228,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="ChatHelpdesc\Client.cs" />
     <Compile Include="ChatHelpdesc\Clients.cs" />
+    <Compile Include="ChatHelpdesc\Dialogs.cs" />
     <Compile Include="ChatHelpdesc\IniFileJson.cs" />
     <Compile Include="ChatHelpdesc\Messages.cs" />
     <Compile Include="Controllers\clientController.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="GMail\APIHelper.cs" />
     <Compile Include="GMail\GmailAPI.cs" />
     <Compile Include="GMail\Message.cs" />
+    <Compile Include="Models\Dialog.cs" />
     <Compile Include="Models\Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

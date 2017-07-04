@@ -4,15 +4,16 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using SupportAgentCRM.Models;
 
 namespace SupportAgentCRM.Controllers
 {
     public class dialogsController : ApiController
     {
         // GET api/<controller>
-        public IEnumerable<string> Get()
+        public List<Dialog> Get()
         {
-            return new string[] { "value1", "value2" };
+            
         }
 
         // GET api/<controller>/5
