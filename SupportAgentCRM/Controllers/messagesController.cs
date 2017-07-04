@@ -10,11 +10,29 @@ namespace SupportAgentCRM.Controllers
     public class messagesController : ApiController
     {
         // GET: api/messages
+        public List<Msg> Get([FromUri]int? dialog_id)
+        {
+            List<Msg> messages = new List<Msg>();
+            if (dialog_id != null)
+            {
+                messages.AddRange(GetChat2DescMessages(dialog_id.ToString(), null));
+            }
+            else
+            {
+                messages.AddRange(GetGmailMessages());
+                messages.AddRange(GetChat2DescMessages(null,Types.from_client));
+            }
+            return messages;
+        }
+
+
+
+        // GET: api/messages
         public List<Msg> Get()
         {
             List<Msg> messages = new List<Msg>();
             messages.AddRange(GetGmailMessages());
-            messages.AddRange(GetChat2DescMessages());
+            messages.AddRange(GetChat2DescMessages(null, Types.from_client));
             return messages;
         }
 
@@ -37,6 +55,13 @@ namespace SupportAgentCRM.Controllers
         // DELETE: api/messages/5
         public void Delete(int id)
         {
+        }
+
+        public static class Types
+        {
+            public static string from_client = "from_client";
+            public static string to_client = "to_client";
+            public static string system = "system";
         }
 
 
@@ -64,10 +89,10 @@ namespace SupportAgentCRM.Controllers
             }
             return messages;
         }
-        List<Msg> GetChat2DescMessages()
+        List<Msg> GetChat2DescMessages(string dialog, string type)
         {
             bool setRead = read();
-            MessagesResponse messagesInCh2D = Messages.GetMessages("from_client", false, 100, setRead);
+            MessagesResponse messagesInCh2D = Messages.GetMessages(type, true, 100, setRead, dialog);
             List<Msg> messages = new List<Msg>();
             foreach (var msg in messagesInCh2D.messages)
             {
@@ -82,6 +107,7 @@ namespace SupportAgentCRM.Controllers
                     text = msg.text,
                     Transport = transport,
                     Phone = client.phone,
+                    dialog=msg.dialog_id
                 };
                 messages.Add(message);
             }

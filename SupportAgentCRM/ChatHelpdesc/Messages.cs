@@ -27,7 +27,7 @@ namespace ChatHelpdescAgent
         /// <param name="read">фильтр по прочитанным или непрочитанным</param>
         /// <param name="setRead">указывает необходимо ли пометить полученные сообщения как прочитанные</param>
         /// <returns></returns>
-        public static MessagesResponse GetMessages(string type, bool? read, int? limit, bool setRead)
+        public static MessagesResponse GetMessages(string type, bool? read, int? limit, bool setRead, string dialog_id)
         {
             System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
             string reqURL = url + "messages";
@@ -41,6 +41,8 @@ namespace ChatHelpdescAgent
                 query["read"] = read.ToString();
             if (limit != null)
                 query["limit"] = limit.ToString();
+            if (dialog_id != null)
+                query["dialog_id"] = dialog_id;
             uriBuilder.Query = query.ToString();
             reqURL = uriBuilder.ToString();
             
@@ -65,7 +67,8 @@ namespace ChatHelpdescAgent
                         read = Boolean.Parse(dynMessage.read.ToString()),
                         created = DateTimeOffset.ParseExact(dynMessage.created.ToString().Replace("UTC", "GMT"),
                                                                      "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
-                        clientID = dynMessage.client_id
+                        clientID = dynMessage.client_id,
+                        dialog_id = dynMessage.dialog_id
                     };
 
                     if (setRead) //если пометить полученные сообщения как прочитанные
@@ -168,6 +171,7 @@ namespace ChatHelpdescAgent
         public DateTimeOffset created { get; set; }
         public string clientID { get; set; }
         public string transport { get; set; }
+        public string dialog_id { get; set; }
     }
 
     /// <summary>
