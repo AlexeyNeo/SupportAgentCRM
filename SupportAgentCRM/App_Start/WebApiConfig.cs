@@ -13,7 +13,7 @@ namespace SupportAgentCRM
 
             // Маршруты веб-API
             config.MapHttpAttributeRoutes();
-
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;// если не сможет подключиться к серверу, то удалить строку.
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

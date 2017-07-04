@@ -29,7 +29,7 @@ namespace ChatHelpdescAgent
         /// <returns></returns>
         public static MessagesResponse GetMessages(string type, bool? read, int? limit, bool setRead, string dialog_id)
         {
-            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+           // System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
             string reqURL = url + "messages";
             
             //формирование URL строки с параметрами
