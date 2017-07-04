@@ -16,7 +16,7 @@ namespace ChatHelpdescAgent
         //private static IniFile ini = new IniFile("config.ini");
         public Clients()
         {
-            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;// если не сможет подключиться к серверу, то удалить строку.
+           // System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;// если не сможет подключиться к серверу, то удалить строку.
             Rest = "https://api.chat2desk.com/v1/clients/";
             //token = new IniFileJson().token;
             token = WebConfigurationManager.AppSettings["Chat2DescToken"];
