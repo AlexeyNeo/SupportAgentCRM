@@ -32,14 +32,31 @@ namespace SupportAgentCRM.Controllers
         {
             List<Msg> messages = new List<Msg>();
             messages.AddRange(GetGmailMessages());
-            messages.AddRange(GetChat2DescMessages(null, Types.from_client));
+            messages.AddRange(GetChat2DescMessages(null, null));
             return messages;
         }
 
         // GET: api/messages/5
         public Msg Get(int id)
         {
-            return null;
+            Message msgBefore = Messages.GetMessage(id.ToString());
+            Clients clients = new Clients();
+            int ClientID = Int32.Parse(msgBefore.clientID);
+            Client client = clients.GetClient(ClientID);
+            Msg msgAfter = new Msg
+            {
+                ID = msgBefore.ID,
+                Name = client.assigned_name,
+                Post = client.extra_comment_2,
+                Company = client.extra_comment_1,
+                text = msgBefore.text,
+                Transport = msgBefore.transport,
+                Phone = client.phone,
+                dialog = msgBefore.dialog_id,
+                Date = msgBefore.created
+            };
+
+            return msgAfter;
         }
 
         // POST: api/messages
@@ -107,7 +124,9 @@ namespace SupportAgentCRM.Controllers
                     text = msg.text,
                     Transport = transport,
                     Phone = client.phone,
-                    dialog=msg.dialog_id
+                    dialog=msg.dialog_id,
+                    Date=msg.created
+                    
                 };
                 messages.Add(message);
             }
