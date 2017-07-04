@@ -66,7 +66,8 @@ namespace SupportAgentCRM.Controllers
         }
         List<Msg> GetChat2DescMessages()
         {
-            MessagesResponse messagesInCh2D = Messages.GetMessages("from_client", false, 100, read());
+            bool setRead = read();
+            MessagesResponse messagesInCh2D = Messages.GetMessages("from_client", false, 100, setRead);
             List<Msg> messages = new List<Msg>();
             foreach (var msg in messagesInCh2D.messages)
             {

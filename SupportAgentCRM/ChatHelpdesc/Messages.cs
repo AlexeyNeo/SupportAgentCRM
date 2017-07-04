@@ -101,7 +101,7 @@ namespace ChatHelpdescAgent
                 readState = "read";// /v1/messages/<id сообщения>/read
             else
                 readState = "unread";// /v1/messages/<id сообщения>/unread
-            reqURL += read;
+            reqURL += readState;
 
             //отправка запроса на сервер
             var client = new RestClient(reqURL);
