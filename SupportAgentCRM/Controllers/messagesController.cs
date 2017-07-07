@@ -15,24 +15,35 @@ namespace SupportAgentCRM.Controllers
             List<Msg> messages = new List<Msg>();
             if (dialog_id != null)
             {
-                messages.AddRange(GetChat2DescMessages(dialog_id.ToString(), null));
+                messages.AddRange(GetChat2DescMessages(dialog_id.ToString(), null, null));
             }
             else
             {
                 messages.AddRange(GetGmailMessages());
-                messages.AddRange(GetChat2DescMessages(null,Types.from_client));
+                messages.AddRange(GetChat2DescMessages(null,Types.from_client, null));
             }
             return messages;
         }
 
-
+        public dynamic Get([FromUri]string source)
+        {
+            List<Msg> messages = new List<Msg>();
+            string ErrorResponse = "Wrong parameters. Try 'gmail' or 'chathelpdesk'";
+            if (source.Equals("gmail"))
+                messages.AddRange(GetGmailMessages());
+            else if (source.Equals("chathelpdesk") || source.Equals("chat2desk"))
+                messages.AddRange(GetChat2DescMessages(null, "from_client", false));
+            else
+                return ErrorResponse;
+            return messages;
+        }
 
         // GET: api/messages
         public List<Msg> Get()
         {
             List<Msg> messages = new List<Msg>();
             messages.AddRange(GetGmailMessages());
-            messages.AddRange(GetChat2DescMessages(null, null));
+            messages.AddRange(GetChat2DescMessages(null, "from_client",false));
             return messages;
         }
 
@@ -106,10 +117,18 @@ namespace SupportAgentCRM.Controllers
             }
             return messages;
         }
-        List<Msg> GetChat2DescMessages(string dialog, string type)
+
+        /// <summary>
+        /// Сообщения из ChatHelpDesc
+        /// </summary>
+        /// <param name="dialog">id диалога</param>
+        /// <param name="type">тип сообщения</param>
+        /// <param name="readState">прочитанные/непрочитанные сообщения</param>
+        /// <returns></returns>
+        List<Msg> GetChat2DescMessages(string dialog, string type, bool? readState)
         {
             bool setRead = read();
-            MessagesResponse messagesInCh2D = Messages.GetMessages(type, true, 100, setRead, dialog);
+            MessagesResponse messagesInCh2D = Messages.GetMessages(type, readState, 50, setRead, dialog);
             List<Msg> messages = new List<Msg>();
             foreach (var msg in messagesInCh2D.messages)
             {
