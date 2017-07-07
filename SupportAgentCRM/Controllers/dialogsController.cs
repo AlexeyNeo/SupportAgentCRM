@@ -15,9 +15,9 @@ namespace SupportAgentCRM.Controllers
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        public Dialog Get(int id)
         {
-            return "value";
+            return Dialogs.Get(id);
         }
 
         // POST api/<controller>

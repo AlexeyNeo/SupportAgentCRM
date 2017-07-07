@@ -16,8 +16,7 @@ namespace ChatHelpdescAgent
 
         public static List<Dialog> Get()
         {
-           // System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;// если не сможет подключиться к серверу, то удалить строку.
-            
+            //возвращает лист диалогов
             List<Dialog> dialogs = new List<Dialog>();
             var client = new RestClient(Rest);
             var request = new RestRequest(Method.GET);
@@ -26,6 +25,9 @@ namespace ChatHelpdescAgent
 
             dynamic dynObj = JsonConvert.DeserializeObject(response.Content);
 
+            if (dialog == null || dialog.status == "error")
+                return null;
+
             foreach (dynamic dialog in dynObj.data)
             {
                 Dialog dlg = new Dialog();
@@ -33,11 +35,33 @@ namespace ChatHelpdescAgent
                 dlg.state = dialog.state;
                 dlg.begin = DateTimeOffset.ParseExact(dialog.begin.ToString().Replace("UTC", "GMT"),
                                                                      "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null);
-                dlg.end = DateTimeOffset.ParseExact(dialog.last_message.created.ToString().Replace("UTC", "GMT"),
+                dlg.end = DateTimeOffset.ParseExact(dialog.end.ToString().Replace("UTC", "GMT"),
                                                                      "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null);
                 dialogs.Add(dlg);
             }
             return dialogs;
+        }
+        public static Dialog Get(int id)
+        {//возвращает диалог
+            Dialog dlg = new  Dialog();
+            var client = new RestClient(Rest + id.ToString());
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("authorization", token);
+            IRestResponse response = client.Execute(request);
+
+            dynamic DynObj = JsonConvert.DeserializeObject(response.Content);
+            dynamic dialog = DynObj.data;
+
+            if (dialog == null || dialog.status =="error")
+                return null;
+
+            dlg.ID = dialog.id;
+            dlg.state = dialog.state;
+            dlg.begin = DateTimeOffset.ParseExact(dialog.begin.ToString().Replace("UTC", "GMT"),
+                                                                     "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null);
+            dlg.end = DateTimeOffset.ParseExact(dialog.end.ToString().Replace("UTC", "GMT"),
+                                                                     "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null);
+            return dlg;
         }
     }
 }
