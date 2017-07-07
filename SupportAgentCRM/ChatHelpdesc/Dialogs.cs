@@ -25,7 +25,7 @@ namespace ChatHelpdescAgent
 
             dynamic dynObj = JsonConvert.DeserializeObject(response.Content);
 
-            if (dialog == null || dialog.status == "error")
+            if (dynObj == null || dynObj.status == "error")
                 return null;
 
             foreach (dynamic dialog in dynObj.data)
