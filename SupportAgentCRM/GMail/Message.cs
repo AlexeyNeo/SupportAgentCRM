@@ -44,7 +44,10 @@ namespace GMailAPILibrary
             if (message.Sender != null)
                 sender = new Sender(message.Sender.Address, message.Sender.Name);//отправитель
             else
-                sender = new Sender(null, null);
+            {
+                var address = message.From[0] as MailboxAddress;
+                sender = new Sender(address.Address, address.Name);
+            }
 
             //сохранение присоединенных файлов
             GetAttachment(message);
