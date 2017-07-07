@@ -32,7 +32,7 @@ namespace SupportAgentCRM.Controllers
         {
             List<Msg> messages = new List<Msg>();
             messages.AddRange(GetGmailMessages());
-            messages.AddRange(GetChat2DescMessages(null, null));
+            //messages.AddRange(GetChat2DescMessages(null, null));
             return messages;
         }
 
