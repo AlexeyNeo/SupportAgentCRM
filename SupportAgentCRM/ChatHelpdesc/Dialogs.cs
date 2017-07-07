@@ -41,6 +41,7 @@ namespace ChatHelpdescAgent
             }
             return dialogs;
         }
+
         public static Dialog Get(int id)
         {//возвращает диалог
             Dialog dlg = new  Dialog();

@@ -19,7 +19,7 @@ namespace SupportAgentCRM.Controllers
             }
             else
             {
-                messages.AddRange(GetGmailMessages());
+               // messages.AddRange(GetGmailMessages());
                 messages.AddRange(GetChat2DescMessages(null,Types.from_client, null));
             }
             return messages;
