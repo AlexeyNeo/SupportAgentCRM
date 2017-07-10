@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using GMailAPILibrary;
 using Message = Google.Apis.Gmail.v1.Data.Message;
+using Google.Apis.Util.Store;
 
 public static class GmailApi
 {
@@ -22,7 +23,7 @@ public static class GmailApi
     {
         var clientSecretData = Encoding.ASCII.GetBytes(ApiHelper.ClientSecret);
         var stream = new MemoryStream(clientSecretData);
-        var credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, Scopes, "user", CancellationToken.None).Result;
+        var credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, Scopes, "user", CancellationToken.None, new FileDataStore(@"E:\service", true)).Result;
 
         var service = new GmailService(new BaseClientService.Initializer()
         {
