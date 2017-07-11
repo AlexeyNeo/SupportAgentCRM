@@ -75,14 +75,16 @@ namespace SupportAgentCRM.Controllers
         {
         }
 
+
         // PUT: api/messages/5
         public void Put(int id, [FromBody]string value)
         {
         }
 
         // DELETE: api/messages/5
-        public void Delete(int id)
+        public dynamic Delete(int id)
         {
+            return null;
         }
 
         public static class Types

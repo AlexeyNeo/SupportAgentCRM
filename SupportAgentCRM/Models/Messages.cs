@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SupportAgentCRM.Models
 {
@@ -16,8 +17,12 @@ namespace SupportAgentCRM.Models
         public string Transport { get; set; }
         public string Phone { get; set; }
         public string dialog { get; set; }
+        public string type { get; set; }
     }
 
-    // GET: api/messages
+    public static class MessagesList
+    {
+        public static List<Msg> Messages = new List<Msg>();
+    }
    
 }
