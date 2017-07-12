@@ -44,10 +44,11 @@ namespace SupportAgentCRM.Controllers
         // GET: api/messages
         public List<Msg> Get()
         {
-            List<Msg> messages = new List<Msg>();
-            messages.AddRange(GetGmailMessages());
-            messages.AddRange(GetChat2DescMessages(null, "from_client",false));
-            return messages;
+            List<Msg> messages = MessagesList.Messages;
+            MessagesList.Messages.Clear();
+            //messages.AddRange(GetGmailMessages());
+            //messages.AddRange(GetChat2DescMessages(null, "from_client",false));
+            return MessagesList.Messages;
         }
 
         // GET: api/messages/5
@@ -78,14 +79,16 @@ namespace SupportAgentCRM.Controllers
         {
         }
 
+
         // PUT: api/messages/5
         public void Put(int id, [FromBody]string value)
         {
         }
 
         // DELETE: api/messages/5
-        public void Delete(int id)
+        public dynamic Delete(int id)
         {
+            return null;
         }
 
         public static class Types
