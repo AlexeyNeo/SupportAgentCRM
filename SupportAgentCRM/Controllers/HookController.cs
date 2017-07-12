@@ -17,9 +17,12 @@ namespace SupportAgentCRM.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        static int HookCount = 0;
-        static string Error = "";
-        string js = "";
+        class rt
+        {
+            public static int HookCount = 0;
+            public static string Error = "";
+            public static string js = "";
+        }
 
         // GET: api/Hook/5
         public void Get([FromBody]string jsonMessage)
@@ -41,16 +44,16 @@ namespace SupportAgentCRM.Controllers
             }
             catch (Exception ex)
             {
-                Error = ex.Message;
-                js = jsonMessage;
+                rt.Error = ex.Message;
+                rt.js = jsonMessage;
             }
-            HookCount++;
+            rt.HookCount++;
         }
 
         // POST: api/Hook
         public dynamic Post([FromBody]string value)
         {
-            return HookCount;
+            return new rt();
         }
 
         // PUT: api/Hook/5
