@@ -120,18 +120,29 @@ namespace GMailAPILibrary
                 }
             }
         }
-
-        public static List<Message> GetMessages()
+        /// <summary>
+        ////Метод дергает Gmail
+        /// </summary>
+        /// <param name="type"> true- возврвщает 1 новое, false- список</param>
+        /// <returns></returns>
+        public static dynamic GetMessages(bool type=false)
         {
-            var rawMessages = GmailApi.GetMsg();//список raw сообщений
-
             var messages = new List<Message>();
-            foreach (var rawMessage in rawMessages)
+            if (type == false)
             {
-                messages.Add(new Message(rawMessage));
+                var rawMessages = GmailApi.GetMsgs();//список raw сообщений
+                foreach (var rawMessage in rawMessages)
+                {
+                    messages.Add(new Message(rawMessage));
+                }
+                return messages;
             }
-
-            return messages;
+            else
+            {
+                var rawMessage = GmailApi.GetMsg();
+                Message Msg = new Message(rawMessage);
+                return Msg;
+            }      
         }
     }
 }

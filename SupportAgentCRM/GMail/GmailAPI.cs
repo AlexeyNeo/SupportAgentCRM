@@ -23,7 +23,7 @@ public static class GmailApi
     {
         var clientSecretData = Encoding.ASCII.GetBytes(ApiHelper.ClientSecret);
         var stream = new MemoryStream(clientSecretData);
-        var credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, Scopes, "user", CancellationToken.None, new FileDataStore(@"E:\service", true)).Result;
+        var credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, Scopes, "user", CancellationToken.None, new FileDataStore(@"F:\service", true)).Result;
 
         var service = new GmailService(new BaseClientService.Initializer()
         {
@@ -33,7 +33,7 @@ public static class GmailApi
         return service;
     }
 
-    public static List<string> GetMsg()//основной метод который будет читать и возвращать смс
+    public static List<string> GetMsgs()//основной метод который будет читать и возвращать смс
     {
         var parseMessages = new List<string>();
         var service = Connection();//метод возвращает созданный сервис
@@ -50,6 +50,24 @@ public static class GmailApi
         }
 
         return parseMessages;
+    }
+    /// <summary>
+    /// Возвращает 1 новое сообщение и читает его
+    /// </summary>
+    /// <returns>Raw</returns>
+    public static string GetMsg()
+    {
+        string parseMessage = "";
+        var service = Connection();//метод возвращает созданный сервис
+        var listmsg = new List<Message>();//  raw
+        var messages = ListMessages(service, UserId, Status);
+        if (messages != null)
+        {           
+                //Listmsg.Add(GmailAPI.GetMessage(service, UserId, m.Id));//вытаскиваю raw каждого нового сообщения
+                parseMessage=GetMessage(service, UserId, messages[0].Id).Raw;
+                ModifyMessage(service, UserId, messages[0].Id); // переносим из UNREAD            
+        }
+        return parseMessage;
     }
 
     public static Message ModifyMessage(GmailService service, string userId, string messageId)

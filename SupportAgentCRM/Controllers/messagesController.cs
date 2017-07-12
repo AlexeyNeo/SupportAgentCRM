@@ -30,7 +30,10 @@ namespace SupportAgentCRM.Controllers
             List<Msg> messages = new List<Msg>();
             string ErrorResponse = "Wrong parameters. Try 'gmail' or 'chathelpdesk'";
             if (source.Equals("gmail"))
-                messages.AddRange(GetGmailMessages());
+            {
+                Msg msg = GetGmailMessages();
+                return msg;
+            }
             else if (source.Equals("chathelpdesk") || source.Equals("chat2desk"))
                 messages.AddRange(GetChat2DescMessages(null, "from_client", false));
             else
@@ -97,25 +100,22 @@ namespace SupportAgentCRM.Controllers
         {
             return Boolean.Parse(WebConfigurationManager.AppSettings["SetMessagesRead"]);
         }
-        List<Msg> GetGmailMessages()
-        {
-            List<GMailAPILibrary.Message> messagesGmail = GMailAPILibrary.Message.GetMessages();
-            List<Msg> messages = new List<Msg>();
-            foreach (var msg in messagesGmail)
-            {
-                Msg message = new Msg
+
+            Msg GetGmailMessages()
+         {
+            GMailAPILibrary.Message messagesGmail = GMailAPILibrary.Message.GetMessages(true);
+             Msg message = new Msg
                 {
-                    Name = msg.sender.Name,
-                    text = msg.TextBody,
-                    TextHtml = msg.HtmlBody,
-                    Subject = msg.Subject,
-                    Date = msg.ReceivedDate,
+                    Name = messagesGmail.sender.Name,
+                    text = messagesGmail.TextBody,
+                    TextHtml = messagesGmail.HtmlBody,
+                    Subject = messagesGmail.Subject,
+                    Date = messagesGmail.ReceivedDate,
                     Transport = "gmail",
-                    EmailAddress = msg.sender.Address
+                    EmailAddress = messagesGmail.sender.Address
                 };
-                messages.Add(message);
-            }
-            return messages;
+
+            return message;
         }
 
         /// <summary>
