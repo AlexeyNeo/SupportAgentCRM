@@ -37,7 +37,7 @@ namespace SupportAgentCRM.Controllers
         }
 
         // POST: api/Hook
-        public void Post([FromBody]string value)
+        public void Post([FromUri]string value)
         {
             try
             {
