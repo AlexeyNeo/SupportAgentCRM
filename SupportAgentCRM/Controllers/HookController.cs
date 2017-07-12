@@ -37,17 +37,21 @@ namespace SupportAgentCRM.Controllers
         {
             try
             {
-                Msg Message = new Msg
+                if (value.data.text != null)
                 {
-                    text = value.data.text,
-                    ID = value.data.id,
-                    Transport = value.data.transport,
-                    type = value.data.type,
-                    Date = DateTimeOffset.ParseExact(value.data.created.ToString().Replace("UTC", "GMT"),
-                                                                         "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
-                    dialog = value.data.dialog_id
-                };
-                MessagesList.Messages.Add(Message);
+                    Msg Message = new Msg
+                    {
+                        text = value.text,
+                        ID = value.id,
+                        Transport = value.transport,
+                        type = value.type,
+                        Date = DateTimeOffset.ParseExact(value.created.ToString().Replace("UTC", "GMT"),
+                                                                             "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
+                        dialog = value.dialog_id
+                    };
+                    MessagesList.Messages.Add(Message);
+                }
+                else Error = "текст пустой";
             }
             catch (Exception ex)
             {
