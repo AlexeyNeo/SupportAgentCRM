@@ -41,10 +41,11 @@ namespace SupportAgentCRM.Controllers
         // GET: api/messages
         public List<Msg> Get()
         {
-            List<Msg> messages = new List<Msg>();
-            messages.AddRange(GetGmailMessages());
-            messages.AddRange(GetChat2DescMessages(null, "from_client",false));
-            return messages;
+            List<Msg> messages = MessagesList.Messages;
+            MessagesList.Messages.Clear();
+            //messages.AddRange(GetGmailMessages());
+            //messages.AddRange(GetChat2DescMessages(null, "from_client",false));
+            return MessagesList.Messages;
         }
 
         // GET: api/messages/5
