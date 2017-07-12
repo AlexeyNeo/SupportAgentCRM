@@ -18,22 +18,32 @@ namespace SupportAgentCRM.Controllers
         }
 
         static int HookCount = 0;
+        static string Error = "";
+        string js = "";
 
         // GET: api/Hook/5
         public void Get([FromBody]string jsonMessage)
         {
-            dynamic dynMessage = JsonConvert.DeserializeObject(jsonMessage);
-            Msg Message = new Msg
+            try
             {
-                text = dynMessage.text,
-                ID = dynMessage.id,
-                Transport = dynMessage.transport,
-                type = dynMessage.type,
-                Date = DateTimeOffset.ParseExact(dynMessage.created.ToString().Replace("UTC", "GMT"),
-                                                                     "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
-                dialog = dynMessage.dialog_id
-            };
-            MessagesList.Messages.Add(Message);
+                dynamic dynMessage = JsonConvert.DeserializeObject(jsonMessage);
+                Msg Message = new Msg
+                {
+                    text = dynMessage.text,
+                    ID = dynMessage.id,
+                    Transport = dynMessage.transport,
+                    type = dynMessage.type,
+                    Date = DateTimeOffset.ParseExact(dynMessage.created.ToString().Replace("UTC", "GMT"),
+                                                                         "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
+                    dialog = dynMessage.dialog_id
+                };
+                MessagesList.Messages.Add(Message);
+            }
+            catch (Exception ex)
+            {
+                Error = ex.Message;
+                js = jsonMessage;
+            }
             HookCount++;
         }
 
