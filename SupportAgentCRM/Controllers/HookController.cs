@@ -4,16 +4,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Newtonsoft.Json;
+using System.Web.Http.Controllers;
 using SupportAgentCRM.Models;
+using System.IO;
 
 namespace SupportAgentCRM.Controllers
 {
     public class HookController : ApiController
     {
-        // GET: api/Hook
-        
-
         public static int HookCount = 0;
         public static string Error = "";
         public static string js = "";
@@ -22,7 +20,6 @@ namespace SupportAgentCRM.Controllers
         {
             public int HookCount { get; set; }
             public string Error { get; set; }
-            public string js { get; set; }
         }
 
         // GET: api/Hook/5
@@ -31,33 +28,30 @@ namespace SupportAgentCRM.Controllers
             return new rt
             {
                 Error = Error,
-                HookCount = HookCount,
-                js = js
+                HookCount = HookCount
             };
         }
 
-        // POST: api/Hook
-        public void Post([FromUri]string value)
+        // POST: api/Hook/value
+        public void Post([FromBody]dynamic value)
         {
             try
             {
-                dynamic dynMessage = JsonConvert.DeserializeObject(value);
                 Msg Message = new Msg
                 {
-                    text = dynMessage.text,
-                    ID = dynMessage.id,
-                    Transport = dynMessage.transport,
-                    type = dynMessage.type,
-                    Date = DateTimeOffset.ParseExact(dynMessage.created.ToString().Replace("UTC", "GMT"),
+                    text = value.data.text,
+                    ID = value.data.id,
+                    Transport = value.data.transport,
+                    type = value.data.type,
+                    Date = DateTimeOffset.ParseExact(value.data.created.ToString().Replace("UTC", "GMT"),
                                                                          "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
-                    dialog = dynMessage.dialog_id
+                    dialog = value.data.dialog_id
                 };
                 MessagesList.Messages.Add(Message);
             }
             catch (Exception ex)
             {
                 Error = ex.Message;
-                js = value;
             }
             HookCount++;
         }
@@ -68,8 +62,9 @@ namespace SupportAgentCRM.Controllers
         }
 
         // DELETE: api/Hook/5
-        public void Delete(int id)
+        public void Delete()
         {
+            MessagesList.Messages.Clear();
         }
     }
 }
