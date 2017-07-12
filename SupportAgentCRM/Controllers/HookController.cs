@@ -17,6 +17,8 @@ namespace SupportAgentCRM.Controllers
             return new string[] { "value1", "value2" };
         }
 
+        static int HookCount = 0;
+
         // GET: api/Hook/5
         public void Get([FromBody]string jsonMessage)
         {
@@ -32,11 +34,13 @@ namespace SupportAgentCRM.Controllers
                 dialog = dynMessage.dialog_id
             };
             MessagesList.Messages.Add(Message);
+            HookCount++;
         }
 
         // POST: api/Hook
-        public void Post([FromBody]string value)
+        public dynamic Post([FromBody]string value)
         {
+            return HookCount;
         }
 
         // PUT: api/Hook/5
