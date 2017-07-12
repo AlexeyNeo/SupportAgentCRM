@@ -14,12 +14,14 @@ namespace SupportAgentCRM.Controllers
     {
         public static int HookCount = 0;
         public static string Error = "";
-        public static string js = "";
+        public dynamic value = null;
 
         class rt
         {
             public int HookCount { get; set; }
             public string Error { get; set; }
+            public dynamic value { get; set; }
+
         }
 
         // GET: api/Hook/5
@@ -33,29 +35,26 @@ namespace SupportAgentCRM.Controllers
         }
 
         // POST: api/Hook/value
-        public void Post([FromBody]dynamic value)
+        public void Post([FromBody] dynamic value)
         {
             try
             {
-                if (value.data.text != null)
+                Msg Message = new Msg
                 {
-                    Msg Message = new Msg
-                    {
-                        text = value.text,
-                        ID = value.id,
-                        Transport = value.transport,
-                        type = value.type,
-                        Date = DateTimeOffset.ParseExact(value.created.ToString().Replace("UTC", "GMT"),
-                                                                             "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
-                        dialog = value.dialog_id
-                    };
-                    MessagesList.Messages.Add(Message);
-                }
-                else Error = "текст пустой";
+                    text = value.text,
+                    ID = value.id,
+                    Transport = value.transport,
+                    type = value.type,
+                    Date = DateTimeOffset.ParseExact(value.created.ToString().Replace("UTC", "GMT"),
+                                                                         "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
+                    dialog = value.data.dialog_id
+                };
+                MessagesList.Messages.Add(Message);
             }
             catch (Exception ex)
             {
                 Error = ex.Message;
+                this.value = value;
             }
             HookCount++;
         }
