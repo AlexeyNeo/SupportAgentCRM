@@ -37,11 +37,13 @@ namespace SupportAgentCRM.Controllers
         }
 
         // POST: api/Hook
-        public void Post([FromUri]string value)
+        [HttpPost]
+        public void Post([FromBody]dynamic json)
         {
             try
             {
-                dynamic dynMessage = JsonConvert.DeserializeObject(value);
+                
+                dynamic dynMessage = JsonConvert.DeserializeObject(json);
                 Msg Message = new Msg
                 {
                     text = dynMessage.text,
@@ -57,7 +59,7 @@ namespace SupportAgentCRM.Controllers
             catch (Exception ex)
             {
                 Error = ex.Message;
-                js = value;
+              //  js = value;
             }
             HookCount++;
         }
