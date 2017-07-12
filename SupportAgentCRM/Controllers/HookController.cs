@@ -12,24 +12,36 @@ namespace SupportAgentCRM.Controllers
     public class HookController : ApiController
     {
         // GET: api/Hook
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        
+
+        public static int HookCount = 0;
+        public static string Error = "";
+        public static string js = "";
 
         class rt
         {
-            public static int HookCount = 0;
-            public static string Error = "";
-            public static string js = "";
+            public int HookCount { get; set; }
+            public string Error { get; set; }
+            public string js { get; set; }
         }
 
         // GET: api/Hook/5
-        public void Get([FromBody]string jsonMessage)
+        public dynamic Get([FromBody]string jsonMessage)
+        {
+            return new rt
+            {
+                Error = Error,
+                HookCount = HookCount,
+                js = js
+            };
+        }
+
+        // POST: api/Hook
+        public void Post([FromBody]string value)
         {
             try
             {
-                dynamic dynMessage = JsonConvert.DeserializeObject(jsonMessage);
+                dynamic dynMessage = JsonConvert.DeserializeObject(value);
                 Msg Message = new Msg
                 {
                     text = dynMessage.text,
@@ -44,16 +56,10 @@ namespace SupportAgentCRM.Controllers
             }
             catch (Exception ex)
             {
-                rt.Error = ex.Message;
-                rt.js = jsonMessage;
+                Error = ex.Message;
+                js = value;
             }
-            rt.HookCount++;
-        }
-
-        // POST: api/Hook
-        public dynamic Post([FromBody]string value)
-        {
-            return new rt();
+            HookCount++;
         }
 
         // PUT: api/Hook/5

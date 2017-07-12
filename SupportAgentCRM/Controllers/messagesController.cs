@@ -154,5 +154,34 @@ namespace SupportAgentCRM.Controllers
             }
             return messages;
         }
+        List<Msg> GetChat2DescMessages(string dialog, string type, bool? readState, DateTimeOffset startDate)
+        {
+            bool setRead = read();
+            MessagesResponse messagesInCh2D = Messages.GetMessages(type, readState, 50, setRead, dialog);
+            List<Msg> messages = new List<Msg>();
+            foreach (var msg in messagesInCh2D.messages)
+            {
+                if (msg.created > startDate)
+                {
+                    Client client = new Clients().GetClient(Int32.Parse(msg.clientID));
+                    var transport = ChatHelpdescAgent.Messages.GetMessage(msg.ID).transport;
+                    Msg message = new Msg()
+                    {
+                        ID = msg.ID,
+                        Name = client.name,
+                        Post = client.extra_comment_2,
+                        Company = client.extra_comment_1,
+                        text = msg.text,
+                        Transport = transport,
+                        Phone = client.phone,
+                        dialog = msg.dialog_id,
+                        Date = msg.created
+
+                    };
+                    messages.Add(message);
+                }
+            }
+            return messages;
+        }
     }
 }
