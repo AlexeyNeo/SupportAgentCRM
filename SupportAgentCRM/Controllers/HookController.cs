@@ -37,23 +37,31 @@ namespace SupportAgentCRM.Controllers
         // POST: api/Hook/value
         public void Post([FromBody] dynamic value)
         {
-            try
+            if (value = null)
             {
-                Msg Message = new Msg
+                try
                 {
-                    text = value.text,
-                    ID = value.id,
-                    Transport = value.transport,
-                    type = value.type,
-                    Date = DateTimeOffset.ParseExact(value.created.ToString().Replace("UTC", "GMT"),
-                                                                         "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
-                    dialog = value.data.dialog_id
-                };
-                MessagesList.Messages.Add(Message);
+                    Msg Message = new Msg
+                    {
+                        text = value.text,
+                        ID = value.id,
+                        Transport = value.transport,
+                        type = value.type,
+                        Date = DateTimeOffset.ParseExact(value.created.ToString().Replace("UTC", "GMT"),
+                                                                             "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
+                        dialog = value.dialog_id
+                    };
+                    MessagesList.Messages.Add(Message);
+                }
+                catch (Exception ex)
+                {
+                    Error = ex.Message;
+                    this.value = value;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Error = ex.Message;
+                Error = "value пуст";
                 this.value = value;
             }
             HookCount++;
