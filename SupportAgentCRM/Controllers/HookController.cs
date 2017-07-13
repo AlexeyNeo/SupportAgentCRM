@@ -35,36 +35,38 @@ namespace SupportAgentCRM.Controllers
         }
 
         // POST: api/Hook/value
-        public void Post([FromBody] dynamic value)
+        public async void Post(/*[FromBody] dynamic value*/)
         {
-            if (value = null)
-            {
-                try
-                {
-                    Msg Message = new Msg
-                    {
-                        text = value.text,
-                        ID = value.id,
-                        Transport = value.transport,
-                        type = value.type,
-                        Date = DateTimeOffset.ParseExact(value.created.ToString().Replace("UTC", "GMT"),
-                                                                             "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
-                        dialog = value.dialog_id
-                    };
-                    MessagesList.Messages.Add(Message);
-                }
-                catch (Exception ex)
-                {
-                    Error = ex.Message;
-                    this.value = value;
-                }
-            }
-            else
-            {
-                Error = "value пуст";
-                this.value = value;
-            }
+            string result = await Request.Content.ReadAsStringAsync();
+            //if (value == null)
+            //{
+            //    try
+            //    {
+            //        Msg Message = new Msg
+            //        {
+            //            text = value.text,
+            //            ID = value.id,
+            //            Transport = value.transport,
+            //            type = value.type,
+            //            Date = DateTimeOffset.ParseExact(value.created.ToString().Replace("UTC", "GMT"),
+            //                                                                 "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
+            //            dialog = value.dialog_id
+            //        };
+            //        MessagesList.Messages.Add(Message);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Error = ex.Message;
+            //        this.value = value;
+            //    }
+            //}
+            //else
+            //{
+            //    Error = "value пуст";
+            //    this.value = value;
+            //}
             HookCount++;
+            this.value = result;
         }
 
         // PUT: api/Hook/5
