@@ -14,13 +14,13 @@ namespace SupportAgentCRM.Controllers
     {
         public static int HookCount = 0;
         public static string Error = "";
-        public dynamic value = null;
+        public static string value;
 
         class rt
         {
             public int HookCount { get; set; }
             public string Error { get; set; }
-            public dynamic value { get; set; }
+            public string value { get; set; }
 
         }
 
@@ -30,7 +30,8 @@ namespace SupportAgentCRM.Controllers
             return new rt
             {
                 Error = Error,
-                HookCount = HookCount
+                HookCount = HookCount,
+                value = value
             };
         }
 
@@ -66,7 +67,7 @@ namespace SupportAgentCRM.Controllers
             //    this.value = value;
             //}
             HookCount++;
-            this.value = result;
+            value = result;
         }
 
         // PUT: api/Hook/5
