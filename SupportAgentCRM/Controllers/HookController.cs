@@ -33,32 +33,36 @@ namespace SupportAgentCRM.Controllers
                 HookCount = HookCount
             };
         }
-        [HttpPost]
-        // POST: api/Hook/value
-        public dynamic Post([FromBody] dynamic json)
-        {
-            try
-            {
-                Msg Message = new Msg
-                {
-                    text = json.text,
-                    ID = json.id,
-                    Transport = json.transport,
-                    type = json.type,
-                    Date = DateTimeOffset.ParseExact(json.created.ToString().Replace("UTC", "GMT"),
-                                                                         "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
-                    dialog = json.dialog_id
-                };
-                MessagesList.Messages.Add(Message);
 
-                return json;
-            }
-            catch (Exception ex)
+        // POST: api/Hook/value
+        public void Post([FromBody] dynamic value)
+        {
+            if (value = null)
             {
-               
-                Error = ex.Message;
-                this.value = json;
-                return Error;
+                try
+                {
+                    Msg Message = new Msg
+                    {
+                        text = value.text,
+                        ID = value.id,
+                        Transport = value.transport,
+                        type = value.type,
+                        Date = DateTimeOffset.ParseExact(value.created.ToString().Replace("UTC", "GMT"),
+                                                                             "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
+                        dialog = value.dialog_id
+                    };
+                    MessagesList.Messages.Add(Message);
+                }
+                catch (Exception ex)
+                {
+                    Error = ex.Message;
+                    this.value = value;
+                }
+            }
+            else
+            {
+                Error = "value пуст";
+                this.value = value;
             }
             HookCount++;
         }
