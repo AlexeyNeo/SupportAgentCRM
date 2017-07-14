@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using SupportAgentCRM.Models;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace SupportAgentCRM.Controllers
 {
@@ -36,36 +37,33 @@ namespace SupportAgentCRM.Controllers
         }
 
         // POST: api/Hook/value
-        public async void Post(/*[FromBody] dynamic value*/)
+        public async void Post()
         {
             string result = await Request.Content.ReadAsStringAsync();
-            //if (value == null)
-            //{
-            //    try
-            //    {
-            //        Msg Message = new Msg
-            //        {
-            //            text = value.text,
-            //            ID = value.id,
-            //            Transport = value.transport,
-            //            type = value.type,
-            //            Date = DateTimeOffset.ParseExact(value.created.ToString().Replace("UTC", "GMT"),
-            //                                                                 "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
-            //            dialog = value.dialog_id
-            //        };
-            //        MessagesList.Messages.Add(Message);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Error = ex.Message;
-            //        this.value = value;
-            //    }
-            //}
-            //else
-            //{
-            //    Error = "value пуст";
-            //    this.value = value;
-            //}
+            //dynamic dynMessageString = JsonConvert.DeserializeObject(result);
+            if (result != null)
+            {
+                try
+                {
+                    dynamic dynMessage = JsonConvert.DeserializeObject(result);
+                    Msg message = new Msg
+                    {
+                        text = dynMessage.text.ToString(),
+                        ID = dynMessage.message_id.ToString(),
+                        Transport = dynMessage.transport.ToString(),
+                        type = dynMessage.type.ToString(),
+                        Name = dynMessage.client.name.ToString(),
+                        Phone = dynMessage.client.phone.ToString(),
+                        dialog = dynMessage.dialog_id.ToString()
+                    };
+                    MessagesList.Messages.Add(message);
+                    Error = null;
+                }
+                catch(Exception ex)
+                {
+                    Error = ex.Message;
+                }
+            }
             HookCount++;
             value = result;
         }
