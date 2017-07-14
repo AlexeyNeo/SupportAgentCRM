@@ -8,6 +8,7 @@ using System.Web.Http.Controllers;
 using SupportAgentCRM.Models;
 using System.IO;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace SupportAgentCRM.Controllers
 {
@@ -37,7 +38,7 @@ namespace SupportAgentCRM.Controllers
         }
 
         // POST: api/Hook/value
-        public async void Post()
+        public async Task<dynamic> Post()
         {
             string result = await Request.Content.ReadAsStringAsync();
             //dynamic dynMessageString = JsonConvert.DeserializeObject(result);
@@ -66,6 +67,7 @@ namespace SupportAgentCRM.Controllers
             }
             HookCount++;
             value = result;
+            return Ok();
         }
 
         // PUT: api/Hook/5
@@ -74,9 +76,10 @@ namespace SupportAgentCRM.Controllers
         }
 
         // DELETE: api/Hook/5
-        public void Delete()
+        public dynamic Delete()
         {
             MessagesList.Messages.Clear();
+            return Ok();
         }
     }
 }
