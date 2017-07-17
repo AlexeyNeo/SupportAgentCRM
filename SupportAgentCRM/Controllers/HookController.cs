@@ -42,7 +42,7 @@ namespace SupportAgentCRM.Controllers
                 try
                 {
                     dynamic dynMessage = JsonConvert.DeserializeObject(result);
-                    Message msg = Messages.GetMessage(dynMessage.id.ToString());
+                    Message msg = Messages.GetMessage(dynMessage.message_id.ToString());
                     Clients clients = new Clients();
                     Client client = clients.GetClient(Int32.Parse(msg.clientID));
                     
