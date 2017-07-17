@@ -27,7 +27,7 @@ namespace GMailAPILibrary
             }
         }
         public Sender sender { get; }
-
+        public string Files {get; set;}
 
         public Message(string raw)
         {
@@ -39,6 +39,7 @@ namespace GMailAPILibrary
             Stream stream = new MemoryStream(ar);
             var parser = new MimeParser(stream, MimeFormat.Default);
             var message = parser.ParseMessage();
+           
 
             //отправитель sender
             if (message.Sender != null)
@@ -56,6 +57,7 @@ namespace GMailAPILibrary
             ReceivedDate = message.Date;//дата
             TextBody = message.TextBody;//тело сообщения
             HtmlBody = message.HtmlBody;//тело сообщения в html
+            
 
             //список заголовков
         /*    this.Headers = new List<string>();
