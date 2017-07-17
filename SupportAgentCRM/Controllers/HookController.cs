@@ -24,6 +24,7 @@ namespace SupportAgentCRM.Controllers
         // GET: api/Hook/5
         public dynamic Get([FromBody]string jsonMessage)
         {
+            MessagesList.Messages.Clear();
             return new rt
             {
                 Error = Error,
@@ -54,7 +55,7 @@ namespace SupportAgentCRM.Controllers
                         type = msg.type,
                         Name = client.name,
                         Phone = client.phone,
-                        dialog = msg.dialog_id,
+                        dialog = dynMessage.dialog_id,
                         Date = msg.created
                     };
                     MessagesList.Messages.Add(message);

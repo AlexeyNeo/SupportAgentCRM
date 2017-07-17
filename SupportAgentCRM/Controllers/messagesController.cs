@@ -46,9 +46,6 @@ namespace SupportAgentCRM.Controllers
         public List<Msg> Get()
         {
             List<Msg> messages = MessagesList.Messages;
-            //MessagesList.Messages.Clear();
-            //messages.AddRange(GetGmailMessages());
-            //messages.AddRange(GetChat2DescMessages(null, "from_client",false));
             return MessagesList.Messages;
         }
 
@@ -87,9 +84,9 @@ namespace SupportAgentCRM.Controllers
         }
 
         // DELETE: api/messages
-        public void Delete()
+        public dynamic Delete()
         {
-            
+            return "123456778";
         }
 
         public static class Types
