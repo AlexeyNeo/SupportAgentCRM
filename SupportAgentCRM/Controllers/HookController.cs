@@ -49,7 +49,8 @@ namespace SupportAgentCRM.Controllers
                         type = dynMessage.type.ToString(),
                         Name = dynMessage.client.name.ToString(),
                         Phone = dynMessage.client.phone.ToString(),
-                        dialog = dynMessage.dialog_id.ToString()
+                        dialog = dynMessage.dialog_id.ToString(),
+                        Date = DateTimeOffset.Now
                     };
                     MessagesList.Messages.Add(message);
                     Error = null;
@@ -69,7 +70,7 @@ namespace SupportAgentCRM.Controllers
         {
         }
 
-        // DELETE: api/Hook/5
+        // DELETE: api/Hook
         public dynamic Delete()
         {
             MessagesList.Messages.Clear();
