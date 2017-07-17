@@ -9,6 +9,7 @@ using SupportAgentCRM.Models;
 using System.IO;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using ChatHelpdescAgent;
 
 namespace SupportAgentCRM.Controllers
 {
@@ -47,16 +48,20 @@ namespace SupportAgentCRM.Controllers
                 try
                 {
                     dynamic dynMessage = JsonConvert.DeserializeObject(result);
+                    Message msg = Messages.GetMessage(dynMessage.id.ToString());
+                    Clients clients = new Clients();
+                    Client client = clients.GetClient(Int32.Parse(msg.clientID));
+                    
                     Msg message = new Msg
                     {
-                        text = dynMessage.text.ToString(),
-                        ID = dynMessage.message_id.ToString(),
-                        Transport = dynMessage.transport.ToString(),
-                        type = dynMessage.type.ToString(),
-                        Name = dynMessage.client.name.ToString(),
-                        Phone = dynMessage.client.phone.ToString(),
-                        dialog = dynMessage.dialog_id.ToString(),
-                        Date = DateTimeOffset.Now
+                        text = msg.text,
+                        ID = msg.ID,
+                        Transport = msg.transport,
+                        type = msg.type,
+                        Name = client.name,
+                        Phone = client.phone,
+                        dialog = msg.dialog_id,
+                        Date = msg.created
                     };
                     MessagesList.Messages.Add(message);
                     Error = null;
