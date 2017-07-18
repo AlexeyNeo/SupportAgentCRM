@@ -105,15 +105,16 @@ namespace SupportAgentCRM.Controllers
             Msg GetGmailMessages()
          {
             GMailAPILibrary.Message messagesGmail = GMailAPILibrary.Message.GetMessages(true);
-             Msg message = new Msg
-                {
-                    Name = messagesGmail.sender.Name,
-                    text = messagesGmail.TextBody,
-                    TextHtml = messagesGmail.HtmlBody,
-                    Subject = messagesGmail.Subject,
-                    Date = messagesGmail.ReceivedDate,
-                    Transport = "gmail",
-                    EmailAddress = messagesGmail.sender.Address
+            Msg message = new Msg
+            {
+                Name = messagesGmail.sender.Name,
+                text = messagesGmail.TextBody,
+                TextHtml = messagesGmail.HtmlBody,
+                Subject = messagesGmail.Subject,
+                Date = messagesGmail.ReceivedDate,
+                Transport = "gmail",
+                EmailAddress = messagesGmail.sender.Address,
+                Files = messagesGmail.Files
                 };
 
             return message;

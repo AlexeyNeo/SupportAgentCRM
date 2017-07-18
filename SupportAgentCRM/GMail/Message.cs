@@ -15,6 +15,7 @@ namespace GMailAPILibrary
         public string Snippet { get; }
         public string TextBody { get; }
         public string HtmlBody { get; }
+        
         public struct Sender
         {
             public string Address;
@@ -27,7 +28,7 @@ namespace GMailAPILibrary
             }
         }
         public Sender sender { get; }
-        public string Files {get; set;}
+        public List<string> Files {get; set;}
 
         public Message(string raw)
         {
@@ -51,8 +52,7 @@ namespace GMailAPILibrary
             }
 
             //сохранение присоединенных файлов
-            GetAttachment(message);
-
+            Files = GetAttachment(message);
             Subject = message.Subject;//тема
             ReceivedDate = message.Date;//дата
             TextBody = message.TextBody;//тело сообщения
@@ -80,6 +80,7 @@ namespace GMailAPILibrary
 
         public static string Base64UrlDecode(string input)
         {
+           
             string text = string.Empty;
             if (input.Length % 4 == 0)
             {
@@ -89,11 +90,16 @@ namespace GMailAPILibrary
             return text;
         }
 
-        protected void GetAttachment(MimeMessage message)
+        protected List<string>  GetAttachment(MimeMessage message)
         {
+            int count= 0;
+            List<string> files= new List<string>();
+            string file;
+            string path = @"F:\";
             var attachments = message.Attachments;
             foreach (var attachment in message.Attachments)
             {
+               // files = new string[1];
                 if (attachment is MessagePart)
                 {
 
@@ -115,12 +121,16 @@ namespace GMailAPILibrary
                 {
                     var part = (MimePart)attachment;
                     var fileName = part.FileName;
+                    file = path + fileName.ToString();
+                    count++;
 
-                    using (var filestream = File.Create(fileName))
+                    using (var filestream = File.Create(path + fileName))
                         part.ContentObject.DecodeTo(filestream);
-
+                    files.Add(file);
                 }
             }
+
+            return files;
         }
         /// <summary>
         ////Метод дергает Gmail

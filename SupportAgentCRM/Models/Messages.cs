@@ -18,6 +18,7 @@ namespace SupportAgentCRM.Models
         public string Phone { get; set; }
         public string dialog { get; set; }
         public string type { get; set; }
+        public List<string> Files { get; set; }
     }
 
     public static class MessagesList
