@@ -145,9 +145,9 @@ namespace SupportAgentCRM.Controllers
                     text = msg.text,
                     Transport = transport,
                     Phone = client.phone,
-                    dialog=msg.dialog_id,
-                    Date=msg.created
-                    
+                    dialog = msg.dialog_id,
+                    Date = msg.created,
+                    type = msg.type
                 };
                 messages.Add(message);
             }
