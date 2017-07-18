@@ -56,7 +56,8 @@ namespace SupportAgentCRM.Controllers
                         Name = client.name,
                         Phone = client.phone,
                         dialog = dynMessage.dialog_id,
-                        Date = msg.created
+                        Date = msg.created,
+                        external_id = client.external_id
                     };
                     MessagesList.Messages.Add(message);
                     Error = null;
