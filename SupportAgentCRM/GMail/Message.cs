@@ -94,7 +94,7 @@ namespace GMailAPILibrary
         {
             int count= 0;
             List<string> files= new List<string>();
-            string file;
+            string file="";
             string path = @"F:\";
             var attachments = message.Attachments;
             foreach (var attachment in message.Attachments)
@@ -121,8 +121,11 @@ namespace GMailAPILibrary
                 {
                     var part = (MimePart)attachment;
                     var fileName = part.FileName;
-                    file = path + fileName.ToString();
+                    //file = path + fileName.ToString();
+                    Stream st= new MemoryStream();
                     count++;
+                    part.ContentObject.WriteTo(st);
+                   
 
                     using (var filestream = File.Create(path + fileName))
                         part.ContentObject.DecodeTo(filestream);
