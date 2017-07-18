@@ -36,7 +36,7 @@ namespace ChatHelpdescAgent
             var uriBuilder = new UriBuilder(reqURL);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
             if (type != null)
-                query["type"] = "from_client";
+                query["type"] = type;
             if(read != null)
                 query["read"] = read.ToString();
             if (limit != null)
