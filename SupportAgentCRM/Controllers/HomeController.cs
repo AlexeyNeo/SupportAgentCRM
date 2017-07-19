@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SupportAgentCRM.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,7 +19,7 @@ namespace SupportAgentCRM.Controllers
         [HttpPost]
         public ActionResult GetChat(string Token)
         {
-            
+            Configer.SetToken(Token);
             ViewBag.chat = "Ваш Токен Зарегистрирован, Первичная настройка для Chat2Deck завершена.";
             return View("Index");
         }

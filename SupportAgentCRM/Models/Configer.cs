@@ -41,7 +41,7 @@ namespace SupportAgentCRM.Models
             string path = HostingEnvironment.ApplicationPhysicalPath;
             try
             {
-                using (FileStream fstream = new FileStream(path + FileName, FileMode.OpenOrCreate))
+                using (FileStream fstream = new FileStream(path + FileName, FileMode.Create))
                 {
                     ChatHelpDeskToken data = new ChatHelpDeskToken
                     {
