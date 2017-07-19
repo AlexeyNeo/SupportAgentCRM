@@ -6,13 +6,15 @@ using SupportAgentCRM.Models;
 using System.Web.Configuration;
 using RestSharp;
 using Newtonsoft.Json;
+using SupportAgentCRM.Models;
 
 namespace ChatHelpdescAgent
 {
     public static class Dialogs
     {
           public static string Rest = "https://api.chat2desk.com/v1/dialogs/";
-          public static string token = WebConfigurationManager.AppSettings["Chat2DescToken"];
+        //public static string token = WebConfigurationManager.AppSettings["Chat2DescToken"];
+        public static string token = Configer.GetToken();
 
         public static List<Dialog> Get()
         {
@@ -60,7 +62,8 @@ namespace ChatHelpdescAgent
             dlg.state = dialog.state;
             dlg.begin = DateTimeOffset.ParseExact(dialog.begin.ToString().Replace("UTC", "GMT"),
                                                                      "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null);
-            dlg.end = DateTimeOffset.ParseExact(dialog.end.ToString().Replace("UTC", "GMT"),
+            if(dlg.end!=null)
+                dlg.end = DateTimeOffset.ParseExact(dialog.end.ToString().Replace("UTC", "GMT"),
                                                                      "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null);
             return dlg;
         }

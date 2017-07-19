@@ -3,6 +3,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Web.Configuration;
+using SupportAgentCRM.Models;
 
 namespace ChatHelpdescAgent
 {
@@ -13,13 +14,14 @@ namespace ChatHelpdescAgent
         /// </summary>
         string Rest;// сслыка  на api
         string token;
-        //private static IniFile ini = new IniFile("config.ini");
+
         public Clients()
         {
            // System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;// если не сможет подключиться к серверу, то удалить строку.
             Rest = "https://api.chat2desk.com/v1/clients/";
             //token = new IniFileJson().token;
-            token = WebConfigurationManager.AppSettings["Chat2DescToken"];
+            //token = WebConfigurationManager.AppSettings["Chat2DescToken"];
+            token = Configer.GetToken();
 
         }
         /// <summary>

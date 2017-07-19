@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Configuration;
+using System.Reflection;
+using System.Web.Hosting;
 
 namespace SupportAgentCRM.Controllers
 {
