@@ -27,7 +27,7 @@ namespace ChatHelpdescAgent
         /// <param name="read">фильтр по прочитанным или непрочитанным</param>
         /// <param name="setRead">указывает необходимо ли пометить полученные сообщения как прочитанные</param>
         /// <returns></returns>
-        public static MessagesResponse GetMessages(string type, bool? read, int? limit, bool setRead, string dialog_id, int total=100, int offset=0)
+        public static MessagesResponse GetMessages(string type, bool? read, int? limit, bool setRead, string dialog_id, int offset=0)
         {
            // System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
             string reqURL = url + "messages";
@@ -43,7 +43,6 @@ namespace ChatHelpdescAgent
                 query["limit"] = limit.ToString();
             if (dialog_id != null)
                 query["dialog_id"] = dialog_id;
-            query["total"] = total.ToString();
             query["offset"] = offset.ToString();
             uriBuilder.Query = query.ToString();
             reqURL = uriBuilder.ToString();

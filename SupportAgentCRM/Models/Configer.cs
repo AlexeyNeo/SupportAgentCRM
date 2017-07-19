@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Web.Hosting;
 using Newtonsoft.Json;
+using System.Web.Configuration;
 
 namespace SupportAgentCRM.Models
 {
@@ -58,6 +59,14 @@ namespace SupportAgentCRM.Models
             {
                 Error = ex.Message;
             }
+        }
+        public static bool IsSetRead()
+        {
+            return bool.Parse(WebConfigurationManager.AppSettings["SetMessagesRead"]);
+        }
+        public static int MessagesLimit()
+        {
+            return Int32.Parse(WebConfigurationManager.AppSettings["MessagesLimit"]);
         }
     }
 

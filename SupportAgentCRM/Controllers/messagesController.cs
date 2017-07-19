@@ -38,7 +38,7 @@ namespace SupportAgentCRM.Controllers
                 return msg;
             }
             else if (source.Equals("chathelpdesk") || source.Equals("chat2desk"))
-                messages.AddRange(GetChat2DescMessages(null, "from_client", false));
+                messages.AddRange(GetChat2DescMessages(null, Types.from_client, false));
             else
                 return ErrorResponse;
             return messages;
@@ -99,11 +99,6 @@ namespace SupportAgentCRM.Controllers
         }
 
 
-        bool read()
-        {
-            return Boolean.Parse(WebConfigurationManager.AppSettings["SetMessagesRead"]);
-        }
-
             Msg GetGmailMessages()
          {
             GMailAPILibrary.Message messagesGmail = GMailAPILibrary.Message.GetMessages(true);
@@ -131,8 +126,9 @@ namespace SupportAgentCRM.Controllers
         /// <returns></returns>
         List<Msg> GetChat2DescMessages(string dialog, string type, bool? readState)
         {
-            bool setRead = read();
-            MessagesResponse messagesInCh2D = Messages.GetMessages(type, readState, 50, setRead, dialog);
+            bool setRead = Configer.IsSetRead();
+            int limit = Configer.MessagesLimit();
+            MessagesResponse messagesInCh2D = Messages.GetMessages(type, readState, limit, setRead, dialog);
             List<Msg> messages = new List<Msg>();
             foreach (var msg in messagesInCh2D.messages)
             {
@@ -152,35 +148,6 @@ namespace SupportAgentCRM.Controllers
                     type = msg.type
                 };
                 messages.Add(message);
-            }
-            return messages;
-        }
-        List<Msg> GetChat2DescMessages(string dialog, string type, bool? readState, DateTimeOffset startDate)
-        {
-            bool setRead = read();
-            MessagesResponse messagesInCh2D = Messages.GetMessages(type, readState, 50, setRead, dialog);
-            List<Msg> messages = new List<Msg>();
-            foreach (var msg in messagesInCh2D.messages)
-            {
-                if (msg.created > startDate)
-                {
-                    Client client = new Clients().GetClient(Int32.Parse(msg.clientID));
-                    var transport = ChatHelpdescAgent.Messages.GetMessage(msg.ID).transport;
-                    Msg message = new Msg()
-                    {
-                        ID = msg.ID,
-                        Name = client.name,
-                        Post = client.extra_comment_2,
-                        Company = client.extra_comment_1,
-                        text = msg.text,
-                        Transport = transport,
-                        Phone = client.phone,
-                        dialog = msg.dialog_id,
-                        Date = msg.created
-
-                    };
-                    messages.Add(message);
-                }
             }
             return messages;
         }
