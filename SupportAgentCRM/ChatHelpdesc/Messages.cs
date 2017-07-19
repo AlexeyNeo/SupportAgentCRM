@@ -4,6 +4,7 @@ using RestSharp;
 using Newtonsoft.Json;
 using System.Web;
 using System.Web.Configuration;
+using SupportAgentCRM.Models;
 
 namespace ChatHelpdescAgent
 {
@@ -13,9 +14,8 @@ namespace ChatHelpdescAgent
     public static class Messages
     {
         //"d1bdb8e80fc2c4d3050d49a10a433d"
-        //static IniFile ini = new IniFile(Environment.CurrentDirectory+@"\config.ini");
-        static string token = WebConfigurationManager.AppSettings["Chat2DescToken"];
-
+        //static string token = WebConfigurationManager.AppSettings["Chat2DescToken"];
+        static string token = Configer.GetToken();
         static string url = "https://api.chat2desk.com/v1/";
 
     
@@ -27,7 +27,7 @@ namespace ChatHelpdescAgent
         /// <param name="read">фильтр по прочитанным или непрочитанным</param>
         /// <param name="setRead">указывает необходимо ли пометить полученные сообщения как прочитанные</param>
         /// <returns></returns>
-        public static MessagesResponse GetMessages(string type, bool? read, int? limit, bool setRead, string dialog_id)
+        public static MessagesResponse GetMessages(string type, bool? read, int? limit, bool setRead, string dialog_id, int total=100, int offset=0)
         {
            // System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
             string reqURL = url + "messages";
@@ -43,6 +43,8 @@ namespace ChatHelpdescAgent
                 query["limit"] = limit.ToString();
             if (dialog_id != null)
                 query["dialog_id"] = dialog_id;
+            query["total"] = total.ToString();
+            query["offset"] = offset.ToString();
             uriBuilder.Query = query.ToString();
             reqURL = uriBuilder.ToString();
             

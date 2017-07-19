@@ -1,4 +1,7 @@
-﻿namespace GMailAPILibrary
+﻿using System.IO;
+using System.Web.Hosting;
+
+namespace GMailAPILibrary
 {
     public static class ApiHelper
     {
@@ -7,5 +10,28 @@
 
         public static readonly string ClientSecret = "{\"installed\":{\"client_id\":\"1000970005109-j660d6o11u6q311lke8cg65in5sgko0p.apps.googleusercontent.com\",\"project_id\":\"testproject1-170004\",\"auth_uri\":\"https://accounts.google.com/o/oauth2/auth\",\"token_uri\":\"https://accounts.google.com/o/oauth2/token\",\"auth_provider_x509_cert_url\":\"https://www.googleapis.com/oauth2/v1/certs\",\"client_secret\":\"PTZxQHhSCZk-KGpXVyMWIN-C\",\"redirect_uris\":[\"urn:ietf:wg:oauth:2.0:oob\",\"http://localhost\"]}}";
 
+        public static string GetClientSecret()
+        {
+            string path = HostingEnvironment.ApplicationPhysicalPath;
+            string secret = string.Empty;
+            try
+            {
+                using (FileStream fstream = new FileStream(path + @"\client_secret.json", FileMode.Open))
+                {
+                    // преобразуем строку в байты
+                    byte[] array = new byte[fstream.Length];
+                    // считываем данные
+                    fstream.Read(array, 0, array.Length);
+                    // декодируем байты в строку
+                    secret = System.Text.Encoding.Default.GetString(array);
+                    
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+
+            }
+            return secret;
+        }
     }
 }

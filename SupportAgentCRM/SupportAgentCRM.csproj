@@ -245,6 +245,7 @@
     <Compile Include="GMail\APIHelper.cs" />
     <Compile Include="GMail\GmailAPI.cs" />
     <Compile Include="GMail\Message.cs" />
+    <Compile Include="Models\Configer.cs" />
     <Compile Include="Models\Dialog.cs" />
     <Compile Include="Models\Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -291,6 +292,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="client_secret.json" />
     <Content Include="Google.Apis.Auth.OAuth2.Responses.TokenResponse-user" />
+    <Content Include="ChHToken.json" />
     <None Include="Properties\PublishProfiles\support.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
