@@ -119,13 +119,16 @@ namespace GMailAPILibrary
                 }
                 else
                 {
+                    
                     var part = (MimePart)attachment;
                     var fileName = part.FileName;
                     //file = path + fileName.ToString();
-                    Stream st= new MemoryStream();
+                    MemoryStream st = new MemoryStream();
                     count++;
-                    part.ContentObject.WriteTo(st);
-                   
+                   // part.ContentObject.WriteTo(st);
+                    //file = st..ToString();
+                    byte[] b = st.GetBuffer();
+                    st.Read(b, 0, b.Length);
 
                     using (var filestream = File.Create(path + fileName))
                         part.ContentObject.DecodeTo(filestream);

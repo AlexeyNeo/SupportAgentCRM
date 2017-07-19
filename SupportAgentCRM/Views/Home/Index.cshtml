@@ -1,24 +1,35 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+﻿<br>
+<div class="panel panel-default">
+    <div class="panel-heading text-center"><h2>Первоначальная настройка сервиса</h2></div>
+    <div class="container col-lg-12">
+        <div class="row">
+            <div class="col-md-6 table-bordered text-left">
+                <h3 class="text-center text-info">Chat2Desk</h3>
+            <img src="~/Content/chat2desk.png"  height="134" class="img-thumbnail"/>
+                <p> Для подключения Chat2Desk к нашему сервису, требуется токен, который нужно ввести единажды.   </p>
+                @using (Html.BeginForm("GetChat", "Home"))
+                {   
+                    <b style="margin-left:10px">   Введите Токен: </b><br>
+                    @Html.TextArea("Token","", 1, 32, null)
+                    <input type="submit" class="btn btn-primary" style="margin-top:-18px" />
+                    
+                }
+                <br />
+            @ViewBag.chat
+            </div>
+            
+            <div class="col-md-6 table-bordered">
+                <h3 class="text-center text-info">Gmail</h3>
+                <img src="~/Content/Gmailpng.png" height="200" class="img-thumbnail" />
+                <p> Для подключения Gmail к нашему сервису, требуется Клиентский секрет, который Вы должны получить зайдя.   </p>
+            @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <input type="file" name="upload"/><br>
+                    <input type="submit" value="Загрузить"  class="btn btn-primary"/>
+                 }
+                @ViewBag.gmail
+                <br />
+            </div>
+        </div>
     </div>
 </div>
