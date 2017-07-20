@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using SupportAgentCRM.Models;
-using System.Web.Configuration;
 using RestSharp;
 using Newtonsoft.Json;
-using SupportAgentCRM.Models;
 
 namespace ChatHelpdescAgent
 {
@@ -28,8 +24,12 @@ namespace ChatHelpdescAgent
             dynamic dynObj = JsonConvert.DeserializeObject(response.Content);
 
             if (dynObj == null || dynObj.status == "error")
-                return null;
-
+            {
+                Dialog dlg = new Dialog();
+                dlg.error = "Диалогов нет или произошла ошибка в запросе.";
+                dialogs.Add(dlg);
+            }
+            
             foreach (dynamic dialog in dynObj.data)
             {
                 Dialog dlg = new Dialog();
@@ -37,8 +37,9 @@ namespace ChatHelpdescAgent
                 dlg.state = dialog.state;
                 dlg.begin = DateTimeOffset.ParseExact(dialog.begin.ToString().Replace("UTC", "GMT"),
                                                                      "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null);
-                dlg.end = DateTimeOffset.ParseExact(dialog.end.ToString().Replace("UTC", "GMT"),
-                                                                     "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null);
+                if (dlg.end != null)
+                    dlg.end = DateTimeOffset.ParseExact(dialog.end.ToString().Replace("UTC", "GMT"),
+                                                                         "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null);
                 dialogs.Add(dlg);
             }
             return dialogs;
@@ -55,8 +56,11 @@ namespace ChatHelpdescAgent
             dynamic DynObj = JsonConvert.DeserializeObject(response.Content);
             dynamic dialog = DynObj.data;
 
-            if (dialog == null || dialog.status =="error")
-                return null;
+            if (DynObj == null || DynObj.status == "error")
+            {
+                dlg.error = "Такого диалога не существует или произошла ошибка в запросе.";
+                return dlg;
+            }
 
             dlg.ID = dialog.id;
             dlg.state = dialog.state;
