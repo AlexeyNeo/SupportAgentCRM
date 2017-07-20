@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using SupportAgentCRM.Models;
 using ChatHelpdescAgent;

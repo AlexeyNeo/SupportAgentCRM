@@ -231,7 +231,6 @@
     <Compile Include="ChatHelpdesc\Client.cs" />
     <Compile Include="ChatHelpdesc\Clients.cs" />
     <Compile Include="ChatHelpdesc\Dialogs.cs" />
-    <Compile Include="ChatHelpdesc\IniFileJson.cs" />
     <Compile Include="ChatHelpdesc\Messages.cs" />
     <Compile Include="Controllers\clientController.cs" />
     <Compile Include="Controllers\dialogsController.cs" />

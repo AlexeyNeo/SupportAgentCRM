@@ -3,9 +3,6 @@ using SupportAgentCRM.Models;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using System.Web.Configuration;
-using System.Reflection;
-using System.Web.Hosting;
 
 namespace SupportAgentCRM.Controllers
 {
@@ -99,7 +96,7 @@ namespace SupportAgentCRM.Controllers
         }
 
 
-            Msg GetGmailMessages()
+        Msg GetGmailMessages()
          {
             GMailAPILibrary.Message messagesGmail = GMailAPILibrary.Message.GetMessages(true);
             Msg message = new Msg
