@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using RestSharp;
 using Newtonsoft.Json;
 using System.Web;
-using System.Web.Configuration;
 using SupportAgentCRM.Models;
 
 namespace ChatHelpdescAgent
@@ -14,7 +13,6 @@ namespace ChatHelpdescAgent
     public static class Messages
     {
         //"d1bdb8e80fc2c4d3050d49a10a433d"
-        //static string token = WebConfigurationManager.AppSettings["Chat2DescToken"];
         static string token = Configer.GetToken();
         static string url = "https://api.chat2desk.com/v1/";
 
@@ -29,7 +27,6 @@ namespace ChatHelpdescAgent
         /// <returns></returns>
         public static MessagesResponse GetMessages(string type, bool? read, int? limit, bool setRead, string dialog_id, int offset=0)
         {
-           // System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
             string reqURL = url + "messages";
             
             //формирование URL строки с параметрами

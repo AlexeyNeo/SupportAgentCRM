@@ -2,7 +2,6 @@
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Web.Configuration;
 using SupportAgentCRM.Models;
 
 namespace ChatHelpdescAgent
@@ -17,13 +16,10 @@ namespace ChatHelpdescAgent
 
         public Clients()
         {
-           // System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;// если не сможет подключиться к серверу, то удалить строку.
             Rest = "https://api.chat2desk.com/v1/clients/";
-            //token = new IniFileJson().token;
-            //token = WebConfigurationManager.AppSettings["Chat2DescToken"];
             token = Configer.GetToken();
-
         }
+
         /// <summary>
         ////Метод возвращает лист клиентов
         /// </summary>
