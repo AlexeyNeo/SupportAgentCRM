@@ -138,7 +138,7 @@ namespace GMailAPILibrary
                         byte[] b = new byte[fileread.Length];
                         fileread.Read(b, 0, b.Length);
                       text =  Encoding.Default.GetString(b);
-                        var f = File.Create(path +@"/"+fileName);
+                        var f = File.Create(path + @"/"+fileName);
                         f.Write(b, 0, b.Length);
                     }
                 }
