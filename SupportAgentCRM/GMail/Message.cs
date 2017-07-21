@@ -93,11 +93,10 @@ namespace GMailAPILibrary
         protected string  GetAttachment(MimeMessage message)
         {
             string text = "";
-            MemoryStream st = new MemoryStream();
             int count= 0;
             List<string> files= new List<string>();
             string file="";
-            string path = @"F:\";
+            string path = @"E:\";
             var attachments = message.Attachments;
             foreach (var attachment in message.Attachments)
             {
@@ -137,9 +136,13 @@ namespace GMailAPILibrary
                     {
                         byte[] b = new byte[fileread.Length];
                         fileread.Read(b, 0, b.Length);
-                      text =  Encoding.Default.GetString(b);
-                        var f = File.Create(path + @"/"+fileName);
-                        f.Write(b, 0, b.Length);
+                        text =  Encoding.Default.GetString(b);
+                        
+                    }
+                    using (FileStream wrStream = File.Create(path + fileName))
+                    {
+                        byte[] ar = Encoding.Default.GetBytes(text);
+                        wrStream.Write(ar, 0, ar.Length);
                     }
                 }
             }

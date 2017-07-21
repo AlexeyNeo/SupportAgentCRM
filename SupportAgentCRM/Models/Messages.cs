@@ -21,6 +21,7 @@ namespace SupportAgentCRM.Models
         public string type { get; set; }
         public string Files { get; set; }
         public string external_id { get; set; }
+        public string assigned_name { get; set; }
     }
 
     public static class MessagesList
