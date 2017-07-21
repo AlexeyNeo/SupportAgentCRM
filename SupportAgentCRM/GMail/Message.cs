@@ -127,18 +127,15 @@ namespace GMailAPILibrary
                     using (filestream = File.Create(path + @"/file.txt"))
                     {
                         part.ContentObject.DecodeTo(filestream);
-                        
-                        // считываем данные
-                       
                     }
                    
                     using (var fileread = File.Open(path + @"/file.txt", FileMode.Open ))
                     {
                         byte[] b = new byte[fileread.Length];
                         fileread.Read(b, 0, b.Length);
-                        text =  Encoding.Default.GetString(b);
-                        
+                        text =  Encoding.Default.GetString(b);         
                     }
+
                     using (FileStream wrStream = File.Create(path + fileName))
                     {
                         byte[] ar = Encoding.Default.GetBytes(text);
