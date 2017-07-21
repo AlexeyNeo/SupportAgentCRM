@@ -28,7 +28,7 @@ namespace GMailAPILibrary
             }
         }
         public Sender sender { get; }
-        public List<string> Files {get; set;}
+        public string Files {get; set;}
 
         public Message(string raw)
         {
@@ -90,8 +90,10 @@ namespace GMailAPILibrary
             return text;
         }
 
-        protected List<string>  GetAttachment(MimeMessage message)
+        protected string  GetAttachment(MimeMessage message)
         {
+            string text = "";
+            MemoryStream st = new MemoryStream();
             int count= 0;
             List<string> files= new List<string>();
             string file="";
@@ -99,7 +101,7 @@ namespace GMailAPILibrary
             var attachments = message.Attachments;
             foreach (var attachment in message.Attachments)
             {
-               // files = new string[1];
+                // files = new string[1];
                 if (attachment is MessagePart)
                 {
 
@@ -119,24 +121,30 @@ namespace GMailAPILibrary
                 }
                 else
                 {
-                    
+
                     var part = (MimePart)attachment;
                     var fileName = part.FileName;
-                    //file = path + fileName.ToString();
-                    MemoryStream st = new MemoryStream();
-                    count++;
-                   // part.ContentObject.WriteTo(st);
-                    //file = st..ToString();
-                    byte[] b = st.GetBuffer();
-                    st.Read(b, 0, b.Length);
-
-                    using (var filestream = File.Create(path + fileName))
+                    FileStream  filestream;
+                    using (filestream = File.Create(path + @"/file.txt"))
+                    {
                         part.ContentObject.DecodeTo(filestream);
-                    files.Add(file);
+                        
+                        // считываем данные
+                       
+                    }
+                   
+                    using (var fileread = File.Open(path + @"/file.txt", FileMode.Open ))
+                    {
+                        byte[] b = new byte[fileread.Length];
+                        fileread.Read(b, 0, b.Length);
+                      text =  Encoding.Default.GetString(b);
+                        var f = File.Create(path +@"/"+fileName);
+                        f.Write(b, 0, b.Length);
+                    }
                 }
             }
 
-            return files;
+            return text;
         }
         /// <summary>
         ////Метод дергает Gmail

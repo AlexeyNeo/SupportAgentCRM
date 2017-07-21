@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SupportAgentCRM.Models
 {
@@ -18,7 +19,7 @@ namespace SupportAgentCRM.Models
         public string Phone { get; set; }
         public string dialog { get; set; }
         public string type { get; set; }
-        public List<string> Files { get; set; }
+        public string Files { get; set; }
         public string external_id { get; set; }
         public string assigned_name { get; set; }
     }
