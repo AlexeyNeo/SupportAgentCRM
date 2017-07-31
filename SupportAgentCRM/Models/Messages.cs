@@ -22,11 +22,17 @@ namespace SupportAgentCRM.Models
         public string Files { get; set; }
         public string external_id { get; set; }
         public string assigned_name { get; set; }
+        public List<Files> files { get; set; }
     }
 
     public static class MessagesList
     {
         public static List<Msg> Messages = new List<Msg>();
     }
-   
+    public class Files
+    {
+        public string Name;
+        public string Data;
+        
+    }
 }
