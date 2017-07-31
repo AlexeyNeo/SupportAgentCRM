@@ -111,7 +111,7 @@ namespace SupportAgentCRM.Controllers
                     Date = messagesGmail.ReceivedDate,
                     Transport = "gmail",
                     EmailAddress = messagesGmail.sender.Address,
-                    Files = messagesGmail.Files
+                    files = messagesGmail.files
                 };
             }
 
