@@ -149,7 +149,8 @@ namespace ChatHelpdescAgent
                     created = DateTimeOffset.ParseExact(dynObj.data.created.ToString().Replace("UTC", "GMT"),
                                                                  "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
                     clientID = dynObj.data.client_id,
-                    transport = dynObj.data.transport
+                    transport = dynObj.data.transport,
+                    
                 };
                 return message;
             }

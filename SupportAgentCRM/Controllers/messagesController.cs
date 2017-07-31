@@ -65,7 +65,8 @@ namespace SupportAgentCRM.Controllers
                 Transport = msgBefore.transport,
                 Phone = client.phone,
                 dialog = msgBefore.dialog_id,
-                Date = msgBefore.created
+                Date = msgBefore.created,
+                assigned_name = client.assigned_name
             };
 
             return msgAfter;
