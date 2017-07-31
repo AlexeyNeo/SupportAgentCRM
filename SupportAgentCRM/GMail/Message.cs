@@ -32,50 +32,46 @@ namespace GMailAPILibrary
 
         public Message(string raw)
         {
-            //декодировка raw сообщения из формата base64url
-            string mimeMessage = Base64UrlDecode(raw);
-
-            //формирование и парсинг сообщения с помощью MimeKit
-            byte[] ar = Encoding.UTF8.GetBytes(mimeMessage);
-            Stream stream = new MemoryStream(ar);
-            var parser = new MimeParser(stream, MimeFormat.Default);
-            var message = parser.ParseMessage();
-           
-
-            //отправитель sender
-            if (message.Sender != null)
-                sender = new Sender(message.Sender.Address, message.Sender.Name);//отправитель
-            else
+            if (raw != null)
             {
-                var address = message.From[0] as MailboxAddress;
-                sender = new Sender(address.Address, address.Name);
+                //декодировка raw сообщения из формата base64url
+                string mimeMessage = Base64UrlDecode(raw);
+
+                //формирование и парсинг сообщения с помощью MimeKit
+                byte[] ar = Encoding.UTF8.GetBytes(mimeMessage);
+                Stream stream = new MemoryStream(ar);
+                var parser = new MimeParser(stream, MimeFormat.Default);
+                var message = parser.ParseMessage();
+
+
+                //отправитель sender
+                if (message.Sender != null)
+                    sender = new Sender(message.Sender.Address, message.Sender.Name);//отправитель
+                else
+                {
+                    var address = message.From[0] as MailboxAddress;
+                    sender = new Sender(address.Address, address.Name);
+                }
+
+                //сохранение присоединенных файлов
+                Files = GetAttachment(message);
+                Subject = message.Subject;//тема
+                ReceivedDate = message.Date;//дата
+                TextBody = message.TextBody;//тело сообщения
+                HtmlBody = message.HtmlBody;//тело сообщения в html
+
+                //адрес отправителя (from)
+                this.From = new Dictionary<string, string>();
+                var internetAddressList = message.From;
+                foreach (MailboxAddress from in internetAddressList)
+                    this.From.Add(from.Address, from.Name);
+
+                //адрес получателя
+                this.To = new Dictionary<string, string>();
+                internetAddressList = message.To;
+                foreach (MailboxAddress to in internetAddressList)
+                    this.To.Add(to.Address, to.Name);
             }
-
-            //сохранение присоединенных файлов
-            Files = GetAttachment(message);
-            Subject = message.Subject;//тема
-            ReceivedDate = message.Date;//дата
-            TextBody = message.TextBody;//тело сообщения
-            HtmlBody = message.HtmlBody;//тело сообщения в html
-            
-
-            //список заголовков
-        /*    this.Headers = new List<string>();
-            foreach (var header in message.Headers)
-                this.Headers.Add(header.Value);
-                */
-
-            //адрес отправителя (from)
-            this.From = new Dictionary<string, string>();
-            var internetAddressList = message.From;
-            foreach (MailboxAddress from in internetAddressList)
-                this.From.Add(from.Address, from.Name);
-
-            //адрес получателя
-            this.To = new Dictionary<string, string>();
-            internetAddressList = message.To;
-            foreach (MailboxAddress to in internetAddressList)
-                this.To.Add(to.Address, to.Name);
         }
 
         public static string Base64UrlDecode(string input)
@@ -153,9 +149,9 @@ namespace GMailAPILibrary
         /// <returns></returns>
         public static dynamic GetMessages(bool type=false)
         {
-            var messages = new List<Message>();
             if (type == false)
             {
+                var messages = new List<Message>();
                 var rawMessages = GmailApi.GetMsgs();//список raw сообщений
                 foreach (var rawMessage in rawMessages)
                 {
@@ -166,8 +162,12 @@ namespace GMailAPILibrary
             else
             {
                 var rawMessage = GmailApi.GetMsg();
-                Message Msg = new Message(rawMessage);
-                return Msg;
+                if (!rawMessage.Equals(string.Empty))
+                {
+                    Message Msg = new Message(rawMessage);
+                    return Msg;
+                }
+                else return null;
             }      
         }
     }

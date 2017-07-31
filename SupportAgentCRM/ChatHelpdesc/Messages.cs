@@ -59,14 +59,15 @@ namespace ChatHelpdescAgent
                 {
                     Message message = new Message
                     {
-                        ID = dynMessage.id,
-                        text = dynMessage.text,
-                        type = dynMessage.type,
-                        read = Boolean.Parse(dynMessage.read.ToString()),
+                        ID = dynMessage.id.ToString(),
+                        text = dynMessage.text.ToString(),
+                        type = dynMessage.type.ToString(),
+                        read = bool.Parse(dynMessage.read.ToString()),
                         created = DateTimeOffset.ParseExact(dynMessage.created.ToString().Replace("UTC", "GMT"),
                                                                      "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
-                        clientID = dynMessage.client_id,
-                        dialog_id = dynMessage.dialog_id
+                        clientID = dynMessage.client_id.ToString(),
+                        transport = dynMessage.transport.ToString(),
+                        dialog_id = dynMessage.dialog_id.ToString()
                     };
 
                     if (setRead) //если пометить полученные сообщения как прочитанные
