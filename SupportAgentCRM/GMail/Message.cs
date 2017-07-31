@@ -58,7 +58,7 @@ namespace GMailAPILibrary
                 }
 
                 //сохранение присоединенных файлов
-                Files = GetAttachment(message);
+                files = GetAttachment(message);
                 Subject = message.Subject;//тема
                 ReceivedDate = message.Date;//дата
                 TextBody = message.TextBody;//тело сообщения
