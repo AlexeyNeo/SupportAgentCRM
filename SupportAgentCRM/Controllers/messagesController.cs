@@ -99,17 +99,22 @@ namespace SupportAgentCRM.Controllers
         Msg GetGmailMessages()
          {
             GMailAPILibrary.Message messagesGmail = GMailAPILibrary.Message.GetMessages(true);
-            Msg message = new Msg
+            Msg message = null;
+            if (messagesGmail != null)
             {
-                Name = messagesGmail.sender.Name,
-                text = messagesGmail.TextBody,
-                TextHtml = messagesGmail.HtmlBody,
-                Subject = messagesGmail.Subject,
-                Date = messagesGmail.ReceivedDate,
-                Transport = "gmail",
-                EmailAddress = messagesGmail.sender.Address,
-                files = messagesGmail.files
+                message = new Msg
+                {
+                    Name = messagesGmail.sender.Name,
+                    text = messagesGmail.TextBody,
+                    TextHtml = messagesGmail.HtmlBody,
+                    Subject = messagesGmail.Subject,
+                    Date = messagesGmail.ReceivedDate,
+                    Transport = "gmail",
+                    EmailAddress = messagesGmail.sender.Address,
+                    Files = messagesGmail.Files
                 };
+            }
+
             return message;
         }
 
@@ -129,7 +134,7 @@ namespace SupportAgentCRM.Controllers
             foreach (var msg in messagesInCh2D.messages)
             {
                 Client client = new Clients().GetClient(Int32.Parse(msg.clientID));
-                var transport = ChatHelpdescAgent.Messages.GetMessage(msg.ID).transport;
+                //var transport = ChatHelpdescAgent.Messages.GetMessage(msg.ID).transport;
                 Msg message = new Msg()
                 {
                     ID = msg.ID,
@@ -137,11 +142,12 @@ namespace SupportAgentCRM.Controllers
                     Post = client.extra_comment_2,
                     Company = client.extra_comment_1,
                     text = msg.text,
-                    Transport = transport,
+                    Transport = msg.transport,
                     Phone = client.phone,
                     dialog = msg.dialog_id,
                     Date = msg.created,
-                    type = msg.type
+                    type = msg.type,
+                    assigned_name = client.assigned_name
                 };
                 messages.Add(message);
             }
