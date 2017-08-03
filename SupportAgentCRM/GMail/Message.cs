@@ -37,7 +37,7 @@ namespace GMailAPILibrary
         public Message(string raw)
         {
             if (raw != null)
-            {
+            { 
                 //декодировка raw сообщения из формата base64url
                 string mimeMessage = Base64UrlDecode(raw);
 

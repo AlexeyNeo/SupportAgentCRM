@@ -1,6 +1,8 @@
-﻿using SupportAgentCRM.Models;
+﻿using Newtonsoft.Json;
+using SupportAgentCRM.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Hosting;
@@ -41,6 +43,56 @@ namespace SupportAgentCRM.Controllers
                 ViewBag.gmail = "Секрет успешно загружен.";
             }
             return View("Index");
+        }
+        [HttpPost]
+        public bool SetTokens(string ChatHelpDesk, string Gmail)
+        {
+            if (ChatHelpDesk != null)
+            {
+                string name = "ChHToken.json";
+                string path = HostingEnvironment.ApplicationPhysicalPath;
+                try
+                {
+                    using (FileStream fstream = new FileStream(path + name, FileMode.Create))
+                    {
+                        ChatHelpDeskToken data = new ChatHelpDeskToken
+                        {
+                            Token = ChatHelpDesk
+                        };
+                        string json = JsonConvert.SerializeObject(data);
+                        // преобразуем строку в байты
+                        byte[] array = System.Text.Encoding.Default.GetBytes(json);
+                        // запись массива байтов в файл
+                        fstream.Write(array, 0, array.Length);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string ModelError = ex.Message;
+                }
+            }
+            if (Gmail != null)
+            {
+                string name = "Google.Apis.Auth.OAuth2.Responses.TokenResponse-user";
+                string path = HostingEnvironment.ApplicationPhysicalPath;
+                try
+                {
+                    using (FileStream fstream = new FileStream(path + name, FileMode.Create))
+                    {
+                        //string json = JsonConvert.SerializeObject(Gmail);
+                        // преобразуем строку в байты
+                        byte[] array = System.Text.Encoding.Default.GetBytes(Gmail);
+                        // запись массива байтов в файл
+                        fstream.Write(array, 0, array.Length);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string ModelError = ex.Message;
+                }
+            }
+
+            return true;
         }
     }
 }
