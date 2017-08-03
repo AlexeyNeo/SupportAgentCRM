@@ -44,7 +44,11 @@ namespace SupportAgentCRM.Controllers
         // GET: api/messages
         public List<Msg> Get()
         {
-            List<Msg> messages = MessagesList.Messages;
+            List<Msg> messages;
+            if (MessagesList.Messages.Count != 0)
+                messages = MessagesList.Messages;
+            else
+                messages = Configer.ReadPool();
             return MessagesList.Messages;
         }
 

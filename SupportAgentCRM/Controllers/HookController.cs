@@ -61,6 +61,7 @@ namespace SupportAgentCRM.Controllers
                         assigned_name = client.assigned_name
                     };
                     MessagesList.Messages.Add(message);
+                    Configer.WritePool(MessagesList.Messages);
                     Error = null;
                 }
                 catch(Exception ex)
