@@ -47,7 +47,7 @@ namespace ChatHelpdescAgent
             //отправка запроса на сервер
             var client = new RestClient(reqURL);
             var request = new RestRequest(Method.GET);
-            request.AddHeader("authorization", token);
+            request.AddHeader("authorization", Configer.GetToken());
             IRestResponse response = client.Execute(request);
 
             //получение коллекции сообщений
@@ -108,7 +108,7 @@ namespace ChatHelpdescAgent
             //отправка запроса на сервер
             var client = new RestClient(reqURL);
             var request = new RestRequest(Method.GET);
-            request.AddHeader("authorization", token);
+            request.AddHeader("authorization", Configer.GetToken());
             IRestResponse response = client.Execute(request);
 
             dynamic dynObj = JsonConvert.DeserializeObject(response.Content);//парсим json
@@ -133,7 +133,7 @@ namespace ChatHelpdescAgent
             //отправка запроса на сервер
             var client = new RestClient(reqURL);
             var request = new RestRequest(Method.GET);
-            request.AddHeader("authorization", token);
+            request.AddHeader("authorization", Configer.GetToken());
             IRestResponse response = client.Execute(request);
 
             dynamic dynObj = JsonConvert.DeserializeObject(response.Content);//парсим json

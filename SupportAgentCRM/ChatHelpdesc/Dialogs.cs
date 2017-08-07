@@ -17,7 +17,7 @@ namespace ChatHelpdescAgent
             List<Dialog> dialogs = new List<Dialog>();
             var client = new RestClient(Rest);
             var request = new RestRequest(Method.GET);
-            request.AddHeader("authorization", token);
+            request.AddHeader("authorization", Configer.GetToken());
             IRestResponse response = client.Execute(request);
 
             dynamic dynObj = JsonConvert.DeserializeObject(response.Content);
@@ -49,7 +49,7 @@ namespace ChatHelpdescAgent
             Dialog dlg = new  Dialog();
             var client = new RestClient(Rest + id.ToString());
             var request = new RestRequest(Method.GET);
-            request.AddHeader("authorization", token);
+            request.AddHeader("authorization", Configer.GetToken());
             IRestResponse response = client.Execute(request);
 
             dynamic DynObj = JsonConvert.DeserializeObject(response.Content);

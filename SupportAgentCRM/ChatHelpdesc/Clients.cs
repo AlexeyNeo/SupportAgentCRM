@@ -76,7 +76,7 @@ namespace ChatHelpdescAgent
                 int Count = 0;
                 var client = new RestClient(Rest + Id.ToString());
                 var request = new RestRequest(Method.GET);
-                request.AddHeader("authorization", token);
+                request.AddHeader("authorization", Configer.GetToken());
                 IRestResponse response = client.Execute(request);
 
                 dynamic dynObj = JsonConvert.DeserializeObject(response.Content);
@@ -121,7 +121,7 @@ namespace ChatHelpdescAgent
                 var request = new RestRequest(Method.GET);
                 //     request.AddHeader("postman-token", "724df9c3-0411-af74-62f0-df48cc2aad9f");
                 //   request.AddHeader("cache-control", "no-cache");
-                request.AddHeader("authorization", token);
+                request.AddHeader("authorization", Configer.GetToken());
                 IRestResponse response = client.Execute(request);
                 dynamic dynObj = JsonConvert.DeserializeObject(response.Content);
                 foreach (dynamic C in dynObj.data)
@@ -163,7 +163,7 @@ namespace ChatHelpdescAgent
                     var request = new RestRequest(Method.PUT);
                     request.AddHeader("cache-control", "no-cache");
                     request.AddHeader("content-type", "application/json");
-                    request.AddHeader("authorization", token);
+                    request.AddHeader("authorization", Configer.GetToken());
                     // формирую строку запроса. если поле имеет пустые кавыки, то параметр игнорируем.
                     if (nickname != "")
                     {
@@ -208,7 +208,7 @@ namespace ChatHelpdescAgent
         {
             var client = new RestClient(Rest + Id.ToString());
             var request = new RestRequest(Method.GET);
-            request.AddHeader("authorization", token);
+            request.AddHeader("authorization", Configer.GetToken());
             IRestResponse response = client.Execute(request);
             if (response.ErrorException != null)
             {
