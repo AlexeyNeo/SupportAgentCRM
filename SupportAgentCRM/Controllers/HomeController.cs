@@ -47,8 +47,8 @@ namespace SupportAgentCRM.Controllers
         [HttpPost]
         public bool SetTokens(string ChatHelpDesk, string Gmail)
         {
-            if (ChatHelpDesk != null)
-            {
+            if (ChatHelpDesk != null && ChatHelpDesk != "")
+            { 
                 string name = "ChHToken.json";
                 string path = HostingEnvironment.ApplicationPhysicalPath;
                 try
@@ -71,7 +71,7 @@ namespace SupportAgentCRM.Controllers
                     string ModelError = ex.Message;
                 }
             }
-            if (Gmail != null)
+            if (Gmail != null && Gmail != "")
             {
                 string name = "Google.Apis.Auth.OAuth2.Responses.TokenResponse-user";
                 string path = HostingEnvironment.ApplicationPhysicalPath;
@@ -91,7 +91,6 @@ namespace SupportAgentCRM.Controllers
                     string ModelError = ex.Message;
                 }
             }
-
             return true;
         }
     }
