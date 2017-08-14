@@ -27,6 +27,7 @@ namespace ChatHelpdescAgent
                 Dialog dlg = new Dialog();
                 dlg.error = "Диалогов нет или произошла ошибка в запросе.";
                 dialogs.Add(dlg);
+                return dialogs;
             }
             
             foreach (dynamic dialog in dynObj.data)
@@ -42,6 +43,7 @@ namespace ChatHelpdescAgent
                 dialogs.Add(dlg);
             }
             return dialogs;
+
         }
 
         public static Dialog Get(int id)

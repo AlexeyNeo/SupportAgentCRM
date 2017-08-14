@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using RestSharp;
 using SupportAgentCRM.Models;
 using System;
 using System.Collections.Generic;
@@ -45,9 +46,9 @@ namespace SupportAgentCRM.Controllers
             return View("Index");
         }
         [HttpPost]
-        public bool SetTokens(string ChatHelpDesk, string Gmail)
+        public bool SetTokens(string ChatHelpDesk, string Gmail, string Host)
         {
-            if (ChatHelpDesk != null && ChatHelpDesk != "")
+            if (ChatHelpDesk != null && ChatHelpDesk != "" && Host !="" )
             { 
                 string name = "ChHToken.json";
                 string path = HostingEnvironment.ApplicationPhysicalPath;
@@ -65,6 +66,13 @@ namespace SupportAgentCRM.Controllers
                         // запись массива байтов в файл
                         fstream.Write(array, 0, array.Length);
                     }
+                    var client = new RestClient("https://api.chat2desk.com/v1/companies/web_hook");
+                    var request = new RestRequest(Method.POST);
+                    request.AddHeader("cache-control", "no-cache");
+                    request.AddHeader("content-type", "application/json");
+                    request.AddHeader("authorization", "938791b995cebbfaebe36dffb96c58");
+                    request.AddParameter("application/json", "{\n    \"url\": \""+ Host +"\n}", ParameterType.RequestBody);
+                    IRestResponse response = client.Execute(request);
                 }
                 catch (Exception ex)
                 {
