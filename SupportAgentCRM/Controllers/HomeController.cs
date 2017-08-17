@@ -54,24 +54,13 @@ namespace SupportAgentCRM.Controllers
                 string path = HostingEnvironment.ApplicationPhysicalPath;
                 try
                 {
-                    using (FileStream fstream = new FileStream(path + name, FileMode.Create))
-                    {
-                        ChatHelpDeskToken data = new ChatHelpDeskToken
-                        {
-                            Token = ChatHelpDesk
-                        };
-                        string json = JsonConvert.SerializeObject(data);
-                        // преобразуем строку в байты
-                        byte[] array = System.Text.Encoding.Default.GetBytes(json);
-                        // запись массива байтов в файл
-                        fstream.Write(array, 0, array.Length);
-                    }
+                    Configer.SetToken(ChatHelpDesk);
                     var client = new RestClient("https://api.chat2desk.com/v1/companies/web_hook");
                     var request = new RestRequest(Method.POST);
                     request.AddHeader("cache-control", "no-cache");
                     request.AddHeader("content-type", "application/json");
-                    request.AddHeader("authorization", "938791b995cebbfaebe36dffb96c58");
-                    request.AddParameter("application/json", "{\n    \"url\": \""+ Host +"\n}", ParameterType.RequestBody);
+                    request.AddHeader("authorization", Configer.GetToken());
+                    request.AddParameter("application/json", JsonConvert.SerializeObject(new { url = Host }), ParameterType.RequestBody);
                     IRestResponse response = client.Execute(request);
                 }
                 catch (Exception ex)
