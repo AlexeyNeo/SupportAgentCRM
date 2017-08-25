@@ -14,7 +14,7 @@ namespace SupportAgentCRM.Models
         public string text { get; set; }
         public string TextHtml { get; set; }
         public string Subject { get; set; }
-        public DateTimeOffset Date { get; set; }
+        public DateTime Date { get; set; }
         public string Transport { get; set; }
         public string Phone { get; set; }
         public string dialog { get; set; }

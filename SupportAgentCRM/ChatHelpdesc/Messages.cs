@@ -64,7 +64,7 @@ namespace ChatHelpdescAgent
                         type = dynMessage.type.ToString(),
                         read = bool.Parse(dynMessage.read.ToString()),
                         created = DateTimeOffset.ParseExact(dynMessage.created.ToString().Replace("UTC", "GMT"),
-                                                                     "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
+                                                                     "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null).UtcDateTime.AddHours(Configer.GetOffset()),
                         clientID = dynMessage.client_id.ToString(),
                         transport = dynMessage.transport.ToString(),
                         dialog_id = dynMessage.dialog_id.ToString()
@@ -147,7 +147,7 @@ namespace ChatHelpdescAgent
                     type = dynObj.data.type,
                     read = Boolean.Parse(dynObj.data.read.ToString()),
                     created = DateTimeOffset.ParseExact(dynObj.data.created.ToString().Replace("UTC", "GMT"),
-                                                                 "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null),
+                                                                 "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null).UtcDateTime.AddHour(Configer.GetOffset()),
                     clientID = dynObj.data.client_id,
                     transport = dynObj.data.transport,
                     
@@ -169,7 +169,7 @@ namespace ChatHelpdescAgent
         public string text { get; set; }
         public string type { get; set; }
         public bool read { get; set; }
-        public DateTimeOffset created { get; set; }
+        public DateTime created { get; set; }
         public string clientID { get; set; }
         public string transport { get; set; }
         public string dialog_id { get; set; }

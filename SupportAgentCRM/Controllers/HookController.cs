@@ -22,7 +22,7 @@ namespace SupportAgentCRM.Controllers
         }
 
         // GET: api/Hook/5
-        public dynamic Get([FromBody]string jsonMessage)
+        public dynamic Get()
         {
             MessagesList.Messages.Clear();
             return new rt

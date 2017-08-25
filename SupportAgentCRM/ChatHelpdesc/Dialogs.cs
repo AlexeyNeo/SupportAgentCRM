@@ -36,10 +36,10 @@ namespace ChatHelpdescAgent
                 dlg.ID = dialog.id;
                 dlg.state = dialog.state;
                 dlg.begin = DateTimeOffset.ParseExact(dialog.begin.ToString().Replace("UTC", "GMT"),
-                                                                     "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null);
+                                                                     "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null).UtcDateTime;
                 if (dlg.end != null)
                     dlg.end = DateTimeOffset.ParseExact(dialog.end.ToString().Replace("UTC", "GMT"),
-                                                                         "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null);
+                                                                         "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null).UtcDateTime;
                 dialogs.Add(dlg);
             }
             return dialogs;
@@ -66,10 +66,10 @@ namespace ChatHelpdescAgent
             dlg.ID = dialog.id;
             dlg.state = dialog.state;
             dlg.begin = DateTimeOffset.ParseExact(dialog.begin.ToString().Replace("UTC", "GMT"),
-                                                                     "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null);
+                                                                     "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null).UtcDateTime.AddHours(Configer.GetOffset());
             if(dlg.end!=null)
                 dlg.end = DateTimeOffset.ParseExact(dialog.end.ToString().Replace("UTC", "GMT"),
-                                                                     "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null);
+                                                                     "yyyy'-'MM'-'dd'T'HH':'mm':'ss GMT", null).UtcDateTime.AddHours(Configer.GetOffset());
             return dlg;
         }
     }

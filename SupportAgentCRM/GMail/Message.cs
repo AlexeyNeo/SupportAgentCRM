@@ -11,7 +11,7 @@ namespace GMailAPILibrary
     public class Message
     {
         public string Subject { get; }
-        public DateTimeOffset ReceivedDate { get; }
+        public DateTime ReceivedDate { get; }
         public Dictionary<string, string> From { get; }
         public Dictionary<string, string> To { get; }
         public string Snippet { get; }
@@ -60,7 +60,7 @@ namespace GMailAPILibrary
                 //сохранение присоединенных файлов
                 files = GetAttachment(message);
                 Subject = message.Subject;//тема
-                ReceivedDate = message.Date;//дата
+                ReceivedDate = message.Date.DateTime;//дата
                 TextBody = message.TextBody;//тело сообщения
                 HtmlBody = message.HtmlBody;//тело сообщения в html
 

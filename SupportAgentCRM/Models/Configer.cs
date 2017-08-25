@@ -115,6 +115,10 @@ namespace SupportAgentCRM.Models
             }
             return true;
         }
+        public static int GetOffset()
+        {
+            return Int32.Parse(WebConfigurationManager.AppSettings["offset"]);
+        }
 
         private static byte[] Encrypt(string clearText, string EncryptionKey = "123")
         {
